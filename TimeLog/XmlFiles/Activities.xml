@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfActivity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Activity>
+    <Name>Coding</Name>
+    <Events>
+      <Event Name="Coding">
+        <StartTime>2022-06-23T13:19:45</StartTime>
+        <EndTime>2022-06-23T13:19:50.7297094-04:00</EndTime>
+      </Event>
+      <Event Name="Coding">
+        <StartTime>2022-06-23T13:22:32</StartTime>
+        <EndTime>2022-06-23T13:22:44.8760467-04:00</EndTime>
+      </Event>
+      <Event Name="Coding">
+        <StartTime>2022-06-20T10:25:20</StartTime>
+        <EndTime>2022-06-20T16:25:20</EndTime>
+      </Event>
+    </Events>
+  </Activity>
+  <Activity>
+    <Name>Reading</Name>
+    <Events>
+      <Event Name="Reading">
+        <StartTime>2022-06-23T13:20:26</StartTime>
+        <EndTime>2022-06-23T13:20:31.6775242-04:00</EndTime>
+      </Event>
+    </Events>
+  </Activity>
+  <Activity>
+    <Name>Sleep</Name>
+    <Events>
+      <Event Name="Sleep">
+        <StartTime>2022-06-23T13:20:34</StartTime>
+        <EndTime>2022-06-23T13:20:42.0666379-04:00</EndTime>
+      </Event>
+    </Events>
+  </Activity>
+</ArrayOfActivity>
