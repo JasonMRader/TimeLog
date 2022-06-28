@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfActivity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Activity>
+    <Name>Coding</Name>
+    <Events>
+
+    </Events>
+  </Activity>
+  <Activity>
+    <Name>Reading</Name>
+    <Events>
+      <Event Name="Reading">
+        <StartTime>2022-06-23T13:20:26</StartTime>
+        <EndTime>2022-06-23T13:20:31.6775242-04:00</EndTime>
+      </Event>
+      <Event Name="Reading">
+        <StartTime>2022-06-23T15:03:13</StartTime>
+        <EndTime>2022-06-23T15:03:28.3113305-04:00</EndTime>
+      </Event>
+      <Event Name="Reading">
+        <StartTime>2022-06-23T15:29:04</StartTime>
+        <EndTime>2022-06-23T15:44:13.0288685-04:00</EndTime>
+      </Event>
+      <Event Name="Reading">
+        <StartTime>2022-06-28T12:39:56</StartTime>
+        <EndTime>2022-06-28T12:39:56</EndTime>
+      </Event>
+      <Event Name="Reading">
+        <StartTime>2022-06-27T13:21:12</StartTime>
+        <EndTime>2022-06-27T13:21:24.8445161-04:00</EndTime>
+      </Event>
+      <Event Name="Reading">
+        <StartTime>2022-06-27T13:24:39</StartTime>
+        <EndTime>2022-06-27T13:24:40.3554474-04:00</EndTime>
+      </Event>
+      <Event Name="Reading">
+        <StartTime>2022-06-27T10:25:05</StartTime>
+        <EndTime>2022-06-27T14:25:05</EndTime>
+      </Event>
+      <Event Name="Reading">
+        <StartTime>2022-06-27T10:25:05</StartTime>
+        <EndTime>2022-06-27T14:25:05</EndTime>
+      </Event>
+      <Event Name="Reading">
+        <StartTime>2022-06-27T13:38:06</StartTime>
+        <EndTime>2022-06-27T13:53:11.4427265-04:00</EndTime>
+      </Event>
+    </Events>
+  </Activity>
+  <Activity>
+    <Name>Sleep</Name>
+    <Events>
+      <Event Name="Sleep">
+        <StartTime>2022-06-23T13:20:34</StartTime>
+        <EndTime>2022-06-23T13:20:42.0666379-04:00</EndTime>
+      </Event>
+      <Event Name="Sleep">
+        <StartTime>2022-06-27T13:22:03</StartTime>
+        <EndTime>2022-06-27T13:22:07.4474129-04:00</EndTime>
+      </Event>
+    </Events>
+  </Activity>
+</ArrayOfActivity>

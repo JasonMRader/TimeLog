@@ -13,9 +13,19 @@ namespace TimeLog
         [XmlElement(ElementName = "Name", Order = 1)]
         public string Name { get; set; }
 
-        [XmlArray(ElementName = "Events", Order = 2)]
+        [XmlArray(ElementName = "Events", Order = 3)]
         public List<Event> Events = new List<Event>();
-        
+        //[XmlElement(ElementName = "ActColor", Order = 2)] public Color Color { get; set; }
+        [XmlIgnore]
+        public Color Color { get; set; }
+
+        [XmlElement(ElementName = "ActColor", Order = 2)]
+        public int ColorAsInt
+        {
+            get { return Color.ToArgb(); }
+            set { Color = Color.FromArgb(value); }
+        }
+
         public void StartCurrentActivity(DateTime start)
         {
             Event e = new Event(start);
@@ -74,6 +84,20 @@ namespace TimeLog
             var xs = new XmlSerializer(typeof(List<Activity>));
             using (Stream s = File.Create(filePath))
                 xs.Serialize(s, list);
+        }
+
+        public static Color GetActivityColor(string activityName)
+        {
+            Color color = Color.White;
+            List <Activity> activities = new List<Activity>(GetActivityList());
+            foreach (Activity activity in activities.Where(x => x.Name == activityName))
+            {
+                color = activity.Color;
+                
+
+            }
+            return color;
+
         }
     }
     
