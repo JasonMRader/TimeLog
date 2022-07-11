@@ -13,64 +13,91 @@ namespace TimeLog
     public partial class frmCurrentActivity : Form
     {
         List<Activity> activities = new List<Activity>();
-        public frmCurrentActivity()
+        Activity activity = new Activity();
+        public frmCurrentActivity(Activity a)
         {
             InitializeComponent();
+            activity = a;
         }
+
+        
+        //private void PopulateCurrentFlow(List<Activity> list)
+        //{
+        //    foreach (Activity a in activities)
+        //    {
+
+        //        Button btn = new Button();
+
+        //        btn.Location = new Point(0, 0);
+        //        btn.Text = a.Name;
+        //        btn.Name = "newBtn" + a.Name;
+        //        btn.BackColor = a.Color;
+        //        btn.FlatAppearance.BorderSize = 0;
+        //        btn.FlatStyle = FlatStyle.Flat;
+        //        btn.Margin = new Padding(0);
+        //        btn.ForeColor = a.TextColor;
+        //        btn.Size = new Size(60, 25);
+        //        btn.AutoSize = true;
+        //        btn.Font = new Font("Arial", 10, FontStyle.Regular);
+        //        btn.Click += new EventHandler(CurrentEventBtn_Click);
+        //        flowCurrentSelection.Controls.Add(btn);
+                
+                
+        //    }
+            
+
+        //}
+
+        //private void CurrentEventBtn_Click(object sender, EventArgs e)
+        //{
+        //    Button btn = sender as Button;
+        //    btnStartCurrent.Visible = true;
+        //    btnStartCurrent.Tag = btn.Text;
+        //    this.BackColor = btn.BackColor;
+        //    lblActivityDisplay.Text = btnStartCurrent.Tag.ToString();
+        //}
+     
 
         private void frmCurrentActivity_Load(object sender, EventArgs e)
         {
             activities = Activity.GetActivityList();
-            foreach (Activity a in activities)
-            {
-                lbxAllActivities.Items.Add(a.Name);
-            }
-        }
-
-        private void lbxAllActivities_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lbxAllActivities.SelectedIndex == -1)
-            {
-                btnStartCurrent.Enabled = false;
-                btnStopCurrentActivity.Enabled = false;
-                
-            }
-            if (lbxAllActivities.SelectedIndex >= 0)
-            {
-                if (rdoCurrentEvent.Checked)
-                {
-                    btnStartCurrent.Visible = true;
-                    pnlCurrentEvent.Visible = true;
-                    
-                }
-                if (rdoPastEvent.Checked)
-                {
-                    pnlPassedEvent.Visible = true;
-                    lbxAllActivities.Visible = false;
-                    pnlLbx.Visible = false;
-                    lblPastEventDisplay.Text = lbxAllActivities.Text;
-                    btnRecordPastEvent.Visible = true;
-                }
-                
-                
-            }
-        }
-
-        private void btnStartCurrent_Click(object sender, EventArgs e)
-        {
+            
+            
+            PopulateCurrentFlow(activities);
+            pnlCurrentEvent.Visible = true;
             lblCurrentEventStart.Text = DateTime.Now.ToString("hh:mm:ss tt");
             lblActivityDisplay.Visible = true;
-            lblActivityDisplay.Text = "You Are " + lbxAllActivities.Text;
+            //lblActivityDisplay.Text = btnStartCurrent.Tag.ToString();
             lblCurrentDuration.Visible = true;
             lblStartLabel.Visible = true;
             lblCurrentEventStart.Visible = true;
-            lbxAllActivities.Visible = false;
-            pnlLbx.Visible = false;
             btnStartCurrent.Visible = false;
             btnStopCurrentActivity.Visible = true;
-            gbModeSelect.Visible = false;
-            Color color = Activity.GetActivityColor(lbxAllActivities.Text);
-            pnlCurrentEvent.BackColor = color;
+            this.BackColor = activity.Color;
+            flowCurrentSelection.Visible = false;
+            timer1.Enabled = true;
+
+        }
+
+
+        private void btnStartCurrent_Click(object sender, EventArgs e)
+        {
+            pnlCurrentEvent.Visible = true;
+            lblCurrentEventStart.Text = DateTime.Now.ToString("hh:mm:ss tt");
+            lblActivityDisplay.Visible = true;
+            //lblActivityDisplay.Text = btnStartCurrent.Tag.ToString();
+            lblCurrentDuration.Visible = true;
+            lblStartLabel.Visible = true;
+            lblCurrentEventStart.Visible = true;
+            
+           
+            //btnStartCurrent.Visible = false;
+            btnStopCurrentActivity.Visible = true;
+            //gbModeSelect.Visible = false;
+            //Color color = Activity.GetActivityColor(btnStartCurrent.Tag.ToString());
+            this.BackColor = activity.Color;
+            //flowCurrentSelection.Visible = false;
+
 
 
 
@@ -80,24 +107,33 @@ namespace TimeLog
         private void btnStopCurrentActivity_Click(object sender, EventArgs e)
         {
             timer1.Stop();
-            gbModeSelect.Visible=true;
+            //gbModeSelect.Visible=true;
 
             activities = Activity.GetActivityList();
-            foreach (Activity activity in activities.Where(x => x.Name == lbxAllActivities.SelectedItem.ToString()))
+            foreach (Activity activity in activities.Where(x => x.Name == activity.Name))
             {
                 activity.AddPastEvent(activity.Name, DateTime.Parse(lblCurrentEventStart.Text), DateTime.Now);
 
             }
             Activity.SaveActivityList(activities);
-            lbxAllActivities.Visible = true;
-            pnlLbx.Visible = true;
+            
+            
             pnlCurrentEvent.Visible = false;
+            btnStopCurrentActivity.Visible=false;
+            //btnStartCurrent.Visible = true;
+            this.Close();
+
+            Form frm = Application.OpenForms["Form1"]; //it should works
+            frm.Show();
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             TimeSpan duration = DateTime.Now - DateTime.Parse(lblCurrentEventStart.Text);
             lblCurrentDuration.Text = duration.ToString("hh':'mm':'ss");
+             
+            
         }
 
         private void btnDone_Click(object sender, EventArgs e)
@@ -105,96 +141,10 @@ namespace TimeLog
             this.Close();
 
             Form frm = Application.OpenForms["Form1"]; //it should works
-            frm.Show();
-            
-
-
+            frm.Show();          
 
         }
-
-        private void dtpPastEventStart_ValueChanged(object sender, EventArgs e)
-        {
-            lblOldStart.Visible = true;
-            lblOldStart.Text = dtpPastEventStart.Value.ToString("dddd");
-        }
-
-        private void dtpPastEventEnd_ValueChanged(object sender, EventArgs e)
-        {
-            lblOldEnd.Visible = true;
-            lblOldEnd.Text = dtpPastEventEnd.Value.ToString("dddd");
-        }
-
-        private void btnRecordPastEvent_Click(object sender, EventArgs e)
-        {
-            activities = Activity.GetActivityList();
-            foreach (Activity a in activities.Where(x => x.Name == lbxAllActivities.Text))
-            {
-                a.AddPastEvent(a.Name, dtpPastEventStart.Value, dtpPastEventEnd.Value);
-            }
-            Activity.SaveActivityList(activities);
-        }
-
-        private void rdoNewCatagory_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rdoNewCatagory.Checked)
-            {
-                pnlCurrentEvent.Visible = false;
-                pnlPassedEvent.Visible = false;
-                lbxAllActivities.Visible = false;
-                pnlLbx.Visible = false;
-                pnlNewCatagory.Visible = true;
-                btnCreateNewType.Visible = true;
-                
-            }
-            if (!rdoNewCatagory.Checked)
-            {
-                pnlNewCatagory.Visible = false;
-            }
-        }
-
-        private void btnCancelPastEvent_Click(object sender, EventArgs e)
-        {
-            pnlPassedEvent.Visible=false;
-            lbxAllActivities.Visible=true;
-            pnlLbx.Visible = true;
-        }
-
-        private void rdoCurrentEvent_CheckedChanged(object sender, EventArgs e)
-        {
-            
-            if (rdoCurrentEvent.Checked)
-            {
-                lbxAllActivities.Visible = true;
-                pnlLbx.Visible = true;
-                pnlCurrentEvent.Visible = false;
-                pnlPassedEvent.Visible = false;
-                btnCreateNewType.Visible = false;
-                btnRecordPastEvent.Visible = false;
-                btnStartCurrent.Visible = false;
-                btnStopCurrentActivity.Visible = false;
-            }
-        }
-
-        private void rdoPastEvent_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rdoPastEvent.Checked)
-            {
-                lbxAllActivities.Visible = true;
-                pnlLbx.Visible = true;
-                pnlCurrentEvent.Visible=false;
-                pnlPassedEvent.Visible = false;
-                btnCreateNewType.Visible=false;
-                btnRecordPastEvent.Visible = false;
-                btnStartCurrent.Visible=false;
-                btnStopCurrentActivity.Visible=false;
-            }
-            if (!rdoPastEvent.Checked)
-            {
-                btnRecordPastEvent.Visible=false;
-            }
-
-        }
-
+      
         private void btnAddFive_Click(object sender, EventArgs e)
         {
             lblCurrentEventStart.Text = DateTime.Parse(lblCurrentEventStart.Text).AddMinutes(5).ToString("hh:mm:ss tt");
@@ -208,35 +158,55 @@ namespace TimeLog
         {
             pnlCurrentEvent.Visible = false ;
             btnStopCurrentActivity.Visible = false;
-            lbxAllActivities.Visible=true;
-            pnlLbx.Visible=true ;
-            gbModeSelect.Visible=true ;
-            btnStartCurrent.Visible = false;
-        }
-
-        private void btnColorSelect_Click(object sender, EventArgs e)
-        {
-            colorDialog1 = new ColorDialog();
-            colorDialog1.ShowDialog();
+            //lbxAllActivities.Visible=true;
             
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
-                
-                pnlNewCatagory.BackColor = colorDialog1.Color;
-                
-            }
-                
-                
+            //gbModeSelect.Visible=true ;
+            //btnStartCurrent.Visible = false;
         }
 
-        private void btnCreateNewType_Click(object sender, EventArgs e)
+        
+        private void btnFocusMode_Click(object sender, EventArgs e)
         {
-            activities = Activity.GetActivityList();
-            Activity a = new Activity();
-            a.Name = txtNewActivityName.Text;
-            a.Color = colorDialog1.Color;
-            activities.Add(a);
-            Activity.SaveActivityList(activities);
+            FocusedMode();
         }
+        private void FocusedMode()
+        {
+            Panel panel = new Panel();
+            panel = pnlCurrentEvent;
+            panel.Size = new Size(1050, 125);
+            panel.Location = new Point(0, 0);
+            this.Controls.Add(panel);
+            lblStartLabel.Visible = false;
+            
+            lblCurrentEventStart.Font = new Font("Arial", 16, FontStyle.Bold);
+            btnAddFive.Visible = false;
+            btnMinusFive.Visible = false;
+            lblActivityDisplay.Location = new Point(10, 10);
+            btnStopCurrentActivity.Location = new Point(850, 15);
+            lblCurrentEventStart.Location = new Point(75, 10);
+            lblCurrentDuration.Location = new Point(375, 10);
+            lblActivityDisplay.Font = new Font("Arial", 16, FontStyle.Bold);
+
+            this.Size = new Size(1050, 125);
+            //this.ControlBox = false;
+            
+            
+            lblCurrentDuration.Font = new Font("Arial", 40, FontStyle.Bold);
+
+            //Label lblFocusStart = new Label();
+            //lblFocusStart.Text = DateTime.Now.ToString("hh:mm:ss tt");
+            //lblFocusStart.Location = new Point(10,10);
+            //this.Controls.Add(lblFocusStart);
+            //Label lbl = new Label();
+            //lbl.Text = lblActivityDisplay.Text + "  " + lblCurrentDuration.Text;
+            //lbl.Location = new Point(450, 10);
+            //lbl.AutoSize = true;
+            //lbl.Font = new Font("Arial", 25, FontStyle.Bold);
+            //timer1.Enabled = true;
+            //this.Controls.Add(lbl);
+        }
+
+       
     }
 }
+

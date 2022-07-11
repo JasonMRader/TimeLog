@@ -27,7 +27,28 @@ namespace TimeLog
         }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public string DisplayEvent()
+        {
+            int j = 20 - this.Name.Length;
+            string s = string.Empty;
+            for (int i = 0; i < j; i++)
+            {
+                s += " ";
+            }
+            return this.Name + s +
+                    this.StartTime.ToString("ddd") + " " +
+                    this.StartTime.ToString("hh:mm tt") + " " +
+                    this.Duration.ToString("hh':'mm");
+        }
+        public string ButtonName()
+        {
+            return this.Name + this.StartTime.ToString();
+        }
+        
         [XmlAttribute]public string Name { get; set; }
+        [XmlIgnore]public Color Color { get; set; }
+        [XmlIgnore]public Color TextColor { get; set; }
+
         public TimeSpan Duration
         {
             get 
@@ -37,6 +58,52 @@ namespace TimeLog
             }
             
         }
+        public int PanelLength
+        {
+            get
+            {
+                int length = (int) this.Duration.TotalMinutes;
+                return length;
+
+
+            }
+        }
+
+       
+
+        public int GetAdjustedLocation(DateTime startDate, int hour, int min)
+        {
+           
+
+
+
+            if (this.StartTime.Date > startDate.Date)
+            {
+                DateTime displayStart = new DateTime(startDate.Year, startDate.Month, startDate.Day, hour, min, 0);
+                TimeSpan sinceMidnight = this.StartTime - displayStart;
+                int location = (int) sinceMidnight.TotalMinutes;
+                location = location + 960;
+                return location;
+
+            }
+            else
+            {
+                DateTime displayStart = new DateTime(startDate.Year, startDate.Month, startDate.Day, hour, min, 0);
+                TimeSpan sinceMidnight = this.StartTime - displayStart;
+                return (int)sinceMidnight.TotalMinutes;
+
+            }
+
+        }
+
+        public static int GetNowDisplay(int hour, int min)
+        {
+            DateTime dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hour, min, 0);
+            
+            TimeSpan sinceMidnight = DateTime.Now - dt;
+            return (int)sinceMidnight.TotalMinutes;
+        }
+
         
     }
 }
