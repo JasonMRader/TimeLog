@@ -47,7 +47,7 @@
             // 
             this.lblActivityDisplay.AutoSize = true;
             this.lblActivityDisplay.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblActivityDisplay.Location = new System.Drawing.Point(3, 11);
+            this.lblActivityDisplay.Location = new System.Drawing.Point(3, 3);
             this.lblActivityDisplay.Name = "lblActivityDisplay";
             this.lblActivityDisplay.Size = new System.Drawing.Size(181, 30);
             this.lblActivityDisplay.TabIndex = 9;
@@ -79,7 +79,7 @@
             // 
             this.lblCurrentDuration.AutoSize = true;
             this.lblCurrentDuration.Font = new System.Drawing.Font("Segoe UI", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblCurrentDuration.Location = new System.Drawing.Point(17, 79);
+            this.lblCurrentDuration.Location = new System.Drawing.Point(17, 66);
             this.lblCurrentDuration.Name = "lblCurrentDuration";
             this.lblCurrentDuration.Size = new System.Drawing.Size(60, 47);
             this.lblCurrentDuration.TabIndex = 14;
@@ -88,9 +88,11 @@
             // 
             // btnStopCurrentActivity
             // 
-            this.btnStopCurrentActivity.Location = new System.Drawing.Point(15, 185);
+            this.btnStopCurrentActivity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStopCurrentActivity.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnStopCurrentActivity.Location = new System.Drawing.Point(12, 151);
             this.btnStopCurrentActivity.Name = "btnStopCurrentActivity";
-            this.btnStopCurrentActivity.Size = new System.Drawing.Size(427, 52);
+            this.btnStopCurrentActivity.Size = new System.Drawing.Size(300, 47);
             this.btnStopCurrentActivity.TabIndex = 16;
             this.btnStopCurrentActivity.Text = "Stop!";
             this.btnStopCurrentActivity.UseVisualStyleBackColor = true;
@@ -113,15 +115,17 @@
             this.pnlCurrentEvent.Controls.Add(this.lblCurrentEventStart);
             this.pnlCurrentEvent.Location = new System.Drawing.Point(12, 22);
             this.pnlCurrentEvent.Name = "pnlCurrentEvent";
-            this.pnlCurrentEvent.Size = new System.Drawing.Size(433, 148);
+            this.pnlCurrentEvent.Size = new System.Drawing.Size(303, 123);
             this.pnlCurrentEvent.TabIndex = 20;
             this.pnlCurrentEvent.Visible = false;
             // 
             // btnCancelCurrent
             // 
-            this.btnCancelCurrent.Location = new System.Drawing.Point(338, 11);
+            this.btnCancelCurrent.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelCurrent.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCancelCurrent.Location = new System.Drawing.Point(208, 85);
             this.btnCancelCurrent.Name = "btnCancelCurrent";
-            this.btnCancelCurrent.Size = new System.Drawing.Size(92, 23);
+            this.btnCancelCurrent.Size = new System.Drawing.Size(92, 35);
             this.btnCancelCurrent.TabIndex = 28;
             this.btnCancelCurrent.Text = "Cancel";
             this.btnCancelCurrent.UseVisualStyleBackColor = true;
@@ -129,9 +133,11 @@
             // 
             // btnMinusFive
             // 
-            this.btnMinusFive.Location = new System.Drawing.Point(242, 41);
+            this.btnMinusFive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMinusFive.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnMinusFive.Location = new System.Drawing.Point(220, 41);
             this.btnMinusFive.Name = "btnMinusFive";
-            this.btnMinusFive.Size = new System.Drawing.Size(43, 38);
+            this.btnMinusFive.Size = new System.Drawing.Size(51, 38);
             this.btnMinusFive.TabIndex = 27;
             this.btnMinusFive.Text = "-5";
             this.btnMinusFive.UseVisualStyleBackColor = true;
@@ -139,9 +145,11 @@
             // 
             // btnAddFive
             // 
-            this.btnAddFive.Location = new System.Drawing.Point(242, 3);
+            this.btnAddFive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddFive.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAddFive.Location = new System.Drawing.Point(220, 3);
             this.btnAddFive.Name = "btnAddFive";
-            this.btnAddFive.Size = new System.Drawing.Size(43, 38);
+            this.btnAddFive.Size = new System.Drawing.Size(51, 38);
             this.btnAddFive.TabIndex = 26;
             this.btnAddFive.Text = "+5";
             this.btnAddFive.UseVisualStyleBackColor = true;
@@ -155,7 +163,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(461, 250);
+            this.ClientSize = new System.Drawing.Size(327, 250);
             this.Controls.Add(this.btnStopCurrentActivity);
             this.Controls.Add(this.pnlCurrentEvent);
             this.Name = "frmCurrentActivity";

@@ -63,18 +63,20 @@ namespace TimeLog
             activities = Activity.GetActivityList();
             
             
-            PopulateCurrentFlow(activities);
+            //PopulateCurrentFlow(activities);
             pnlCurrentEvent.Visible = true;
             lblCurrentEventStart.Text = DateTime.Now.ToString("hh:mm:ss tt");
             lblActivityDisplay.Visible = true;
+            lblActivityDisplay.Text = activity.Name;
             //lblActivityDisplay.Text = btnStartCurrent.Tag.ToString();
             lblCurrentDuration.Visible = true;
             lblStartLabel.Visible = true;
             lblCurrentEventStart.Visible = true;
-            btnStartCurrent.Visible = false;
+            //btnStartCurrent.Visible = false;
             btnStopCurrentActivity.Visible = true;
             this.BackColor = activity.Color;
-            flowCurrentSelection.Visible = false;
+            this.ForeColor = activity.TextColor;
+            //flowCurrentSelection.Visible = false;
             timer1.Enabled = true;
 
         }
@@ -158,8 +160,13 @@ namespace TimeLog
         {
             pnlCurrentEvent.Visible = false ;
             btnStopCurrentActivity.Visible = false;
+            timer1.Stop();
+            this.Close();
+
+            Form frm = Application.OpenForms["Form1"]; //it should works
+            frm.Show();
             //lbxAllActivities.Visible=true;
-            
+
             //gbModeSelect.Visible=true ;
             //btnStartCurrent.Visible = false;
         }

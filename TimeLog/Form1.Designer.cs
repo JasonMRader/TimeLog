@@ -49,18 +49,14 @@
             this.rbAllTime = new System.Windows.Forms.RadioButton();
             this.rbMonth = new System.Windows.Forms.RadioButton();
             this.gbFilters = new System.Windows.Forms.GroupBox();
-            this.lblTodayDisplay = new System.Windows.Forms.Label();
+            this.lblTimeFilterRange = new System.Windows.Forms.Label();
             this.btnStatsPreviousDay = new System.Windows.Forms.Button();
             this.btnStatsNextDay = new System.Windows.Forms.Button();
             this.rbCustom = new System.Windows.Forms.RadioButton();
             this.btnLastMonth = new System.Windows.Forms.Button();
             this.btnNextMonth = new System.Windows.Forms.Button();
-            this.lblDisplayMonth = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblEndOfWeek = new System.Windows.Forms.Label();
             this.btnNextWeek = new System.Windows.Forms.Button();
             this.btnLastWeek = new System.Windows.Forms.Button();
-            this.lblDisplayWeek = new System.Windows.Forms.Label();
             this.rbToday = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -235,12 +231,10 @@
             // rbWeek
             // 
             this.rbWeek.AutoSize = true;
-            this.rbWeek.Checked = true;
             this.rbWeek.Location = new System.Drawing.Point(189, 22);
             this.rbWeek.Name = "rbWeek";
             this.rbWeek.Size = new System.Drawing.Size(54, 19);
             this.rbWeek.TabIndex = 0;
-            this.rbWeek.TabStop = true;
             this.rbWeek.Text = "Week";
             this.rbWeek.UseVisualStyleBackColor = true;
             this.rbWeek.CheckedChanged += new System.EventHandler(this.rbWeek_CheckedChanged);
@@ -248,10 +242,12 @@
             // rbAllTime
             // 
             this.rbAllTime.AutoSize = true;
+            this.rbAllTime.Checked = true;
             this.rbAllTime.Location = new System.Drawing.Point(23, 22);
             this.rbAllTime.Name = "rbAllTime";
             this.rbAllTime.Size = new System.Drawing.Size(68, 19);
             this.rbAllTime.TabIndex = 1;
+            this.rbAllTime.TabStop = true;
             this.rbAllTime.Text = "All Time";
             this.rbAllTime.UseVisualStyleBackColor = true;
             this.rbAllTime.CheckedChanged += new System.EventHandler(this.rbAllTime_CheckedChanged);
@@ -269,18 +265,14 @@
             // 
             // gbFilters
             // 
-            this.gbFilters.Controls.Add(this.lblTodayDisplay);
+            this.gbFilters.Controls.Add(this.lblTimeFilterRange);
             this.gbFilters.Controls.Add(this.btnStatsPreviousDay);
             this.gbFilters.Controls.Add(this.btnStatsNextDay);
             this.gbFilters.Controls.Add(this.rbCustom);
             this.gbFilters.Controls.Add(this.btnLastMonth);
             this.gbFilters.Controls.Add(this.btnNextMonth);
-            this.gbFilters.Controls.Add(this.lblDisplayMonth);
-            this.gbFilters.Controls.Add(this.label1);
-            this.gbFilters.Controls.Add(this.lblEndOfWeek);
             this.gbFilters.Controls.Add(this.btnNextWeek);
             this.gbFilters.Controls.Add(this.btnLastWeek);
-            this.gbFilters.Controls.Add(this.lblDisplayWeek);
             this.gbFilters.Controls.Add(this.rbToday);
             this.gbFilters.Controls.Add(this.rbMonth);
             this.gbFilters.Controls.Add(this.rbAllTime);
@@ -292,15 +284,14 @@
             this.gbFilters.TabStop = false;
             this.gbFilters.Text = "Filters";
             // 
-            // lblTodayDisplay
+            // lblTimeFilterRange
             // 
-            this.lblTodayDisplay.AutoSize = true;
-            this.lblTodayDisplay.Location = new System.Drawing.Point(188, 58);
-            this.lblTodayDisplay.Name = "lblTodayDisplay";
-            this.lblTodayDisplay.Size = new System.Drawing.Size(38, 15);
-            this.lblTodayDisplay.TabIndex = 36;
-            this.lblTodayDisplay.Text = "Today";
-            this.lblTodayDisplay.Visible = false;
+            this.lblTimeFilterRange.AutoSize = true;
+            this.lblTimeFilterRange.Location = new System.Drawing.Point(193, 62);
+            this.lblTimeFilterRange.Name = "lblTimeFilterRange";
+            this.lblTimeFilterRange.Size = new System.Drawing.Size(50, 15);
+            this.lblTimeFilterRange.TabIndex = 41;
+            this.lblTimeFilterRange.Text = "All Time";
             // 
             // btnStatsPreviousDay
             // 
@@ -315,7 +306,7 @@
             // 
             // btnStatsNextDay
             // 
-            this.btnStatsNextDay.Location = new System.Drawing.Point(327, 51);
+            this.btnStatsNextDay.Location = new System.Drawing.Point(327, 49);
             this.btnStatsNextDay.Name = "btnStatsNextDay";
             this.btnStatsNextDay.Size = new System.Drawing.Size(23, 40);
             this.btnStatsNextDay.TabIndex = 41;
@@ -331,7 +322,6 @@
             this.rbCustom.Name = "rbCustom";
             this.rbCustom.Size = new System.Drawing.Size(67, 19);
             this.rbCustom.TabIndex = 35;
-            this.rbCustom.TabStop = true;
             this.rbCustom.Text = "Custom";
             this.rbCustom.UseVisualStyleBackColor = true;
             this.rbCustom.CheckedChanged += new System.EventHandler(this.rbCustom_CheckedChanged);
@@ -358,38 +348,6 @@
             this.btnNextMonth.Visible = false;
             this.btnNextMonth.Click += new System.EventHandler(this.btnNextMonth_Click);
             // 
-            // lblDisplayMonth
-            // 
-            this.lblDisplayMonth.AutoSize = true;
-            this.lblDisplayMonth.Location = new System.Drawing.Point(179, 58);
-            this.lblDisplayMonth.Name = "lblDisplayMonth";
-            this.lblDisplayMonth.Size = new System.Drawing.Size(66, 15);
-            this.lblDisplayMonth.TabIndex = 33;
-            this.lblDisplayMonth.Text = "MonthDisp";
-            this.lblDisplayMonth.Visible = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(209, 62);
-            this.label1.Margin = new System.Windows.Forms.Padding(0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(12, 15);
-            this.label1.TabIndex = 32;
-            this.label1.Text = "-";
-            this.label1.Visible = false;
-            // 
-            // lblEndOfWeek
-            // 
-            this.lblEndOfWeek.AutoSize = true;
-            this.lblEndOfWeek.Location = new System.Drawing.Point(221, 62);
-            this.lblEndOfWeek.Margin = new System.Windows.Forms.Padding(0);
-            this.lblEndOfWeek.Name = "lblEndOfWeek";
-            this.lblEndOfWeek.Size = new System.Drawing.Size(24, 15);
-            this.lblEndOfWeek.TabIndex = 6;
-            this.lblEndOfWeek.Text = "8/8";
-            this.lblEndOfWeek.Visible = false;
-            // 
             // btnNextWeek
             // 
             this.btnNextWeek.Location = new System.Drawing.Point(327, 49);
@@ -411,17 +369,6 @@
             this.btnLastWeek.UseVisualStyleBackColor = true;
             this.btnLastWeek.Visible = false;
             this.btnLastWeek.Click += new System.EventHandler(this.btnLastWeek_Click);
-            // 
-            // lblDisplayWeek
-            // 
-            this.lblDisplayWeek.AutoSize = true;
-            this.lblDisplayWeek.Location = new System.Drawing.Point(179, 62);
-            this.lblDisplayWeek.Margin = new System.Windows.Forms.Padding(0);
-            this.lblDisplayWeek.Name = "lblDisplayWeek";
-            this.lblDisplayWeek.Size = new System.Drawing.Size(24, 15);
-            this.lblDisplayWeek.TabIndex = 4;
-            this.lblDisplayWeek.Text = "8/8";
-            this.lblDisplayWeek.Visible = false;
             // 
             // rbToday
             // 
@@ -611,10 +558,6 @@
         private RadioButton rbToday;
         private Button btnNextWeek;
         private Button btnLastWeek;
-        private Label lblDisplayWeek;
-        private Label lblEndOfWeek;
-        private Label label1;
-        private Label lblDisplayMonth;
         private Button btnLastMonth;
         private Button btnNextMonth;
         private Label label2;
@@ -630,9 +573,9 @@
         private Label label7;
         private ListBox lbxTest;
         private RadioButton rbCustom;
-        private Label lblTodayDisplay;
         private Button btnStatsPreviousDay;
         private Button btnStatsNextDay;
         private FlowLayoutPanel flowStartCurrent;
+        private Label lblTimeFilterRange;
     }
 }

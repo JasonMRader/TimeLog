@@ -359,6 +359,7 @@
             // 
             // flowEvents
             // 
+            this.flowEvents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.flowEvents.Location = new System.Drawing.Point(315, 147);
             this.flowEvents.Name = "flowEvents";
             this.flowEvents.Size = new System.Drawing.Size(275, 273);
@@ -394,6 +395,7 @@
             this.groupBox1.Controls.Add(this.btnPrevious);
             this.groupBox1.Controls.Add(this.rdoWeek);
             this.groupBox1.Controls.Add(this.rdoDay);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.Location = new System.Drawing.Point(315, 53);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(275, 80);

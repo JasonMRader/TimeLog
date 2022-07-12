@@ -131,16 +131,7 @@ namespace TimeLog
             foreach (Activity a in activities)
             {
                 CheckBox cbIgnore = new CheckBox();
-                if (a.isIgnored == true)
-                {
-                    cbIgnore.Checked = true;
-                    cbIgnore.Text = "Ignored";
-                }
-                if (a.isIgnored == false)
-                {
-                    cbIgnore.Checked = false;
-                    cbIgnore.Text = "";
-                }
+                
 
                 cbIgnore.Appearance = Appearance.Button;
                 cbIgnore.Location = new Point(0, 0);
@@ -154,10 +145,20 @@ namespace TimeLog
                 cbIgnore.ForeColor = a.TextColor;
                 cbIgnore.Size = new Size(75, 23);
                 cbIgnore.AutoSize = false;
-                cbIgnore.Tag = a.Name;
+                cbIgnore.Tag = a;
                 cbIgnore.Font = new Font("Arial", 10, FontStyle.Regular);
                 cbIgnore.Click += new EventHandler(EventCbIgnore_Click);
                 flowIgnoreActivity.Controls.Add(cbIgnore);
+                if (a.isIgnored == true)
+                {
+                    cbIgnore.Checked = true;
+                    cbIgnore.Text = "Ignored";
+                }
+                if (a.isIgnored == false)
+                {
+                    cbIgnore.Checked = false;
+                    cbIgnore.Text = "";
+                }
 
             }
         }
@@ -184,17 +185,11 @@ namespace TimeLog
             CheckBox cb = sender as CheckBox;
             string actName = cb.Tag.ToString();
             Activity activity = cb.Tag as Activity;
-            foreach (Activity a in activities.Where(x => x.Name == activity.Name))
+            activity.isIgnored = cb.Checked;
+            foreach (Activity a in list.Where(x => x.Name == activity.Name))
             {
-                if (cb.Checked)
-                {
-                    a.isIgnored = true;
-                }
-                if (!cb.Checked)
-                {
-                    a.isIgnored = false;
-                }
-                
+                a.isIgnored = activity.isIgnored;
+
             }
             if (cb.Checked)
             {
@@ -366,6 +361,7 @@ namespace TimeLog
             a = (Activity)btn.Tag;
             this.Tag = a;
             Form form = new frmCurrentActivity(a);
+            this.Hide();
             form.ShowDialog();
         }
 
@@ -517,7 +513,7 @@ namespace TimeLog
 
         private void rbAllTime_CheckedChanged(object sender, EventArgs e)
         {
-            
+            lblTimeFilterRange.Visible = !rbAllTime.Checked;
             List<Event> events = new List<Event>(Activity.GetAllEvents());
             DateTime firstEvent = events.Min(a => a.StartTime);
             firstEvent = firstEvent.AddDays(-1);
@@ -538,13 +534,13 @@ namespace TimeLog
             //{
             //    wokeUP = events.Max(a => a.EndTime);
             //}
-            lblTodayDisplay.Visible = rbToday.Checked;
+           
             btnStatsNextDay.Visible = rbToday.Checked;
             btnStatsPreviousDay.Visible = rbToday.Checked;
             if (rbToday.Checked)
             {
+                lblTimeFilterRange.Text = DateTime.Today.ToString("ddd MMM d");
                 
-                lblTodayDisplay.Text = DateTime.Today.ToString("M");
                 PopulateStats(DateTime.Today, DateTime.Now);
                 //PopulateEventList(DateTime.Today, DateTime.Now);
             }
@@ -554,7 +550,7 @@ namespace TimeLog
 
         private void rbWeek_CheckedChanged(object sender, EventArgs e)
         {
-            label1.Visible = rbWeek.Checked;
+           
             ///TimeSpan second = new TimeSpan(0, 0, 0, 1);
             DateTime StartOfWeek = DateTime.Now.StartOfWeek(DayOfWeek.Monday);
             DateTime EndOfWeek = StartOfWeek.AddDays(7) - milliSecond;
@@ -564,18 +560,15 @@ namespace TimeLog
             if (rbWeek.Checked)
 
             {
+                lblTimeFilterRange.Text = StartOfWeek.ToString("M/d") + "-" + EndOfWeek.ToString("M/d");
                 
-                lblDisplayWeek.Visible = true;
-                lblEndOfWeek.Visible = true;
-                lblDisplayWeek.Text = StartOfWeek.ToString("M/d");
-                lblEndOfWeek.Text = EndOfWeek.ToString("M/d");
+                
                 btnLastWeek.Visible = true;
                 btnNextWeek.Visible = true;
             }
             if (!rbWeek.Checked)
             {
-                lblEndOfWeek.Visible = false;
-                lblDisplayWeek.Visible = false;
+                
                 btnLastWeek.Visible = false;
                 btnNextWeek.Visible = false;
             }
@@ -590,89 +583,102 @@ namespace TimeLog
 
         private void btnLastWeek_Click(object sender, EventArgs e)
         {
+            string weekStart = lblTimeFilterRange.Text.Substring(0, lblTimeFilterRange.Text.IndexOf("-"));
+            txtTestBox.Text = weekStart;
+
            
-            DateTime lastWeek = DateTime.Parse(lblDisplayWeek.Text).AddDays(-7);
+            DateTime lastWeek = DateTime.Parse(weekStart).AddDays(-7);
             DateTime StartOfWeek = lastWeek.StartOfWeek(DayOfWeek.Monday);
-            DateTime EndOfWeek = StartOfWeek.AddDays(7)- milliSecond;
+            DateTime EndOfWeek = StartOfWeek.AddDays(7) - milliSecond;
             PopulateStats(StartOfWeek, EndOfWeek);
-            //PopulateEventList(StartOfWeek, EndOfWeek);
+            
             TimeSpan ts = EndOfWeek - StartOfWeek;
             Double days = ts.TotalDays;
+            lblTimeFilterRange.Text = StartOfWeek.ToString("M/d") + "-" + EndOfWeek.ToString("M/d");
             
-            lblDisplayWeek.Text = StartOfWeek.ToString("M/d");
-            lblEndOfWeek.Text = EndOfWeek.ToString("M/d");
-            
+
         }
 
         private void btnNextWeek_Click(object sender, EventArgs e)
         {
-            
-            DateTime lastWeek = DateTime.Parse(lblDisplayWeek.Text).AddDays(7);
+
+            string weekStart = lblTimeFilterRange.Text.Substring(0, lblTimeFilterRange.Text.IndexOf("-"));
+            txtTestBox.Text = weekStart;
+
+
+            DateTime lastWeek = DateTime.Parse(weekStart).AddDays(7);
             DateTime StartOfWeek = lastWeek.StartOfWeek(DayOfWeek.Monday);
             DateTime EndOfWeek = StartOfWeek.AddDays(7) - milliSecond;
             PopulateStats(StartOfWeek, EndOfWeek);
-            //PopulateEventList(StartOfWeek, EndOfWeek);
-            lblDisplayWeek.Text = StartOfWeek.ToString("M/d");
-            lblEndOfWeek.Text = EndOfWeek.ToString("M/d");
-            
+
+            TimeSpan ts = EndOfWeek - StartOfWeek;
+            Double days = ts.TotalDays;
+            lblTimeFilterRange.Text = StartOfWeek.ToString("M/d") + "-" + EndOfWeek.ToString("M/d");
+
         }
 
         private void rbMonth_CheckedChanged(object sender, EventArgs e)
         {
+            btnNextMonth.Visible = rbMonth.Checked;
+            btnLastMonth.Visible = rbMonth.Checked;
             if (rbMonth.Checked)
-            {
-                lblDisplayMonth.Visible = true;
-                lblDisplayMonth.Text = DateTime.Now.ToString("MMMM");
-                btnNextMonth.Visible = true;
-                btnLastMonth.Visible = true;
-            }
-            if (!rbMonth.Checked)
-            {
-                lblDisplayMonth.Visible = false;
-                btnNextMonth.Visible = false;
-                btnLastMonth.Visible = false;
-            }
+                lblTimeFilterRange.Text = DateTime.Now.ToString("MMMM");
+
+            var firstDayOfMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddSeconds(-1);
+            PopulateStats(firstDayOfMonth, lastDayOfMonth);
+
+
+
+
         }
 
         private void btnLastMonth_Click(object sender, EventArgs e)
         {
-            DateTime thisMonth = DateTime.ParseExact(lblDisplayMonth.Text, 
+            DateTime thisMonth = DateTime.ParseExact(lblTimeFilterRange.Text, 
                 "MMMM", System.Globalization.CultureInfo.InvariantCulture);
-            DateTime lastMonth = thisMonth.AddMonths(-1);
-            lblDisplayMonth.Text = lastMonth.ToString("MMMM");
+            DateTime displayMonth = thisMonth.AddMonths(-1);
+            lblTimeFilterRange.Text = displayMonth.ToString("MMMM");
+
+            var firstDayOfMonth = new DateTime(displayMonth.Year, displayMonth.Month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddSeconds(-1);
+            PopulateStats(firstDayOfMonth, lastDayOfMonth);
+            txtTestBoxTwo.Text = firstDayOfMonth.ToString();
+            TxtTestBoxThree.Text = lastDayOfMonth.ToString();
         }
 
         private void btnNextMonth_Click(object sender, EventArgs e)
         {
-            DateTime thisMonth = DateTime.ParseExact(lblDisplayMonth.Text,
-                "MMMM", System.Globalization.CultureInfo.InvariantCulture);
-            DateTime lastMonth = thisMonth.AddMonths(1);
-            lblDisplayMonth.Text = lastMonth.ToString("MMMM");
+            DateTime thisMonth = DateTime.ParseExact(lblTimeFilterRange.Text,
+               "MMMM", System.Globalization.CultureInfo.InvariantCulture);
+            DateTime displayMonth = thisMonth.AddMonths(1);
+            lblTimeFilterRange.Text = displayMonth.ToString("MMMM");
+
+            var firstDayOfMonth = new DateTime(displayMonth.Year, displayMonth.Month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddSeconds(-1);
+            PopulateStats(firstDayOfMonth, lastDayOfMonth);
+            txtTestBoxTwo.Text = firstDayOfMonth.ToString();
+            TxtTestBoxThree.Text = lastDayOfMonth.ToString();
         }
 
         private void rbCustom_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbCustom.Checked)
-            {
-                cdrDisplayEvents.Visible = true;
-            }
-            if (!rbCustom.Checked)
-            {
-                cdrDisplayEvents.Visible = false;
-            }
+            cdrDisplayEvents.Visible = rbCustom.Checked;
+            lblTimeFilterRange.Visible = !rbCustom.Checked;
+            
         }
 
         private void btnStatsPreviousDay_Click(object sender, EventArgs e)
         {
-            DateTime day = DateTime.Parse(lblTodayDisplay.Text).AddDays(-1);
-            lblTodayDisplay.Text = day.ToString("M");
+            DateTime day = DateTime.Parse(lblTimeFilterRange.Text).AddDays(-1);
+            lblTimeFilterRange.Text = day.ToString("ddd MMM d");
             PopulateStats(day, day.AddDays(1));
         }
 
         private void btnStatsNextDay_Click(object sender, EventArgs e)
         {
-            DateTime day = DateTime.Parse(lblTodayDisplay.Text).AddDays(1);
-            lblTodayDisplay.Text = day.ToString("M");
+            DateTime day = DateTime.Parse(lblTimeFilterRange.Text).AddDays(1);
+            lblTimeFilterRange.Text = day.ToString("ddd MMM d");
             PopulateStats(day, day.AddDays(1));
         }
     }
