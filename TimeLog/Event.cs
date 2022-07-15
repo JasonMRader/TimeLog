@@ -37,8 +37,9 @@ namespace TimeLog
             }
             return this.Name + s +
                     this.StartTime.ToString("ddd") + " " +
-                    this.StartTime.ToString("hh:mm tt") + " " +
-                    this.Duration.ToString("hh':'mm");
+                    this.StartTime.ToString("hh:mm tt") + "  -  " +
+                    this.EndTime.ToString("hh:mm tt");// + " " +
+                   // this.Duration.ToString("hh':'mm");
         }
         public string ButtonName()
         {
@@ -80,17 +81,17 @@ namespace TimeLog
             if (this.StartTime.Date > startDate.Date)
             {
                 DateTime displayStart = new DateTime(startDate.Year, startDate.Month, startDate.Day, hour, min, 0);
-                TimeSpan sinceMidnight = this.StartTime - displayStart;
-                int location = (int) sinceMidnight.TotalMinutes;
-                location = location + 960;
+                TimeSpan SinceDisplayStart = this.StartTime - displayStart;
+                int location = (int) SinceDisplayStart.TotalMinutes;
+                //location = location;// + 960;
                 return location;
 
             }
             else
             {
                 DateTime displayStart = new DateTime(startDate.Year, startDate.Month, startDate.Day, hour, min, 0);
-                TimeSpan sinceMidnight = this.StartTime - displayStart;
-                return (int)sinceMidnight.TotalMinutes;
+                TimeSpan sinceDisplayStart = this.StartTime - displayStart;
+                return (int)sinceDisplayStart.TotalMinutes;
 
             }
 

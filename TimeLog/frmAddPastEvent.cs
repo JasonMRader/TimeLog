@@ -39,7 +39,7 @@ namespace TimeLog
                 btn.FlatStyle = FlatStyle.Flat;
                 btn.Margin = new Padding(0);
                 btn.ForeColor = ev.TextColor;
-                btn.Size = new Size(300, 25);
+                btn.Size = new Size(315, 25);
                 btn.AutoSize = false;
                 btn.Tag = ev.StartTime;
                 btn.Font = new Font("Arial", 10, FontStyle.Regular);
@@ -126,6 +126,8 @@ namespace TimeLog
             dtpEnd.Value = dtpStart.Value;
             lblStartDisplay.Visible = true;
             lblStartDisplay.Text = dtpStart.Value.ToString("dddd, MMM d");
+            PopulateEventList(dtpStart.Value.Date, dtpStart.Value.Date.AddDays(1));
+            lblTimeFrame.Text = dtpStart.Value.ToString("dddd, MMM d");
         }
 
         private void dtpEnd_ValueChanged(object sender, EventArgs e)
@@ -267,6 +269,7 @@ namespace TimeLog
                 lblTimeFrame.Text = dt.ToString("ddd MMM d");
                 PopulateEventList(dt, dt.AddDays(1));
             }
+            dtpStart.Value = DateTime.Parse(lblTimeFrame.Text);
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -278,6 +281,18 @@ namespace TimeLog
                 lblTimeFrame.Text = dt.ToString("ddd MMM d");
                 PopulateEventList(dt, dt.AddDays(1));
             }
+        }
+
+        private void btnAddMore_Click(object sender, EventArgs e)
+        {
+            List<Activity> activities = Activity.GetActivityList();
+            foreach (Activity a in activities.Where(x => x.Name == lblEventDisplay.Text))
+            {
+                a.AddPastEvent(a.Name, dtpStart.Value, dtpEnd.Value);
+            }
+            Activity.SaveActivityList(activities);
+            PopulateEventList(dtpStart.Value.Date, dtpEnd.Value.Date.AddDays(.99));
+            dtpStart.Value = dtpEnd.Value;
         }
     }
 }

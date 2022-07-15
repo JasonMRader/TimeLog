@@ -66,7 +66,6 @@ namespace TimeLog
                     label.Visible = false;
                 }
 
-
             }
             if (DateTime.Parse(lblDailyView.Text) == DateTime.Today)
             {
@@ -85,43 +84,9 @@ namespace TimeLog
                 lblNow.Text = "Now";
                 //lblNow.ForeColor = Color.White;
                 innerPnl.Controls.Add(lblNow);
-            }
-            
+            }           
 
-
-        }
-
-       
-        //private void PopulateEventList(DateTime startDate, DateTime endDate)
-        //{
-        //    flowLayoutPanel1.Controls.Clear();
-        //    List<Event> events = new List<Event>(Activity.GetEvents(startDate, endDate));
-        //    foreach (Event ev in events)
-        //    {
-        //        string displayEvent = ev.DisplayEvent();
-                    
-        //        CheckBox btn = new CheckBox();
-
-        //        btn.Appearance = Appearance.Button;
-                
-        //        btn.Location = new Point(0, 0);
-        //        btn.Text = displayEvent;
-        //        btn.Name = ev.ButtonName();
-        //        btn.BackColor = ev.Color;
-        //        btn.FlatAppearance.BorderSize = 0;
-        //        btn.FlatStyle = FlatStyle.Flat;
-        //        btn.Margin = new Padding(0);
-        //        btn.ForeColor = ev.TextColor;
-        //        btn.Size = new Size(300, 25);
-        //        btn.AutoSize = false;
-        //        btn.Tag = ev.StartTime;
-        //        btn.Font = new Font("Arial", 10, FontStyle.Regular);
-        //        btn.Click += new EventHandler(EventCkBx_Click);
-        //        flowLayoutPanel1.Controls.Add(btn);
-                
-        //    }            
-
-        //}
+        }              
         private void PopulateIgnoreCheckBoxes(DateTime startDate, DateTime endDate)
         {
             flowIgnoreActivity.Controls.Clear();
@@ -162,22 +127,50 @@ namespace TimeLog
 
             }
         }
-        private bool isIgnored(Activity a)
+        
+        private void RefreshActivityStats()
         {
-            lbxTest.Items.Clear();
-            bool isIgnored = false;
-            foreach (Control c in flowIgnoreActivity.Controls)
+            if (rbAllTime.Checked)
             {
-                if (((CheckBox)c).Checked && c.Tag == a)
-                {
-                    isIgnored = true;
-                    lbxTest.Items.Add(c.Tag.ToString());
-                }
-                
+                List<Event> events = new List<Event>(Activity.GetAllEvents());
+                DateTime firstEvent = events.Min(a => a.StartTime);
+                firstEvent = firstEvent.AddDays(-1);
+                PopulateStats(firstEvent, DateTime.Now);
             }
-            return isIgnored;
-        }
+            if (rbToday.Checked)
+            {
+                DateTime day = DateTime.Parse(lblTimeFilterRange.Text);
+                PopulateStats(day, day.AddDays(1));
+            }
+            if (rbWeek.Checked)
+            {
+                string weekStart = lblTimeFilterRange.Text.Substring(0, lblTimeFilterRange.Text.IndexOf("-"));
+                txtTestBox.Text = weekStart;
 
+                DateTime lastWeek = DateTime.Parse(weekStart);
+                DateTime StartOfWeek = lastWeek.StartOfWeek(DayOfWeek.Monday);
+                DateTime EndOfWeek = StartOfWeek.AddDays(7) - milliSecond;
+                PopulateStats(StartOfWeek, EndOfWeek);
+
+                TimeSpan ts = EndOfWeek - StartOfWeek;
+                Double days = ts.TotalDays;
+
+            }
+            if (rbMonth.Checked)
+            {
+                DateTime thisMonth = DateTime.ParseExact(lblTimeFilterRange.Text,
+                "MMMM", System.Globalization.CultureInfo.InvariantCulture);
+                var firstDayOfMonth = new DateTime(thisMonth.Year, thisMonth.Month, 1);
+                var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddSeconds(-1);
+                PopulateStats(firstDayOfMonth, lastDayOfMonth);
+
+            }
+            if (rbCustom.Checked)
+            {
+
+                PopulateStats(cdrDisplayEvents.SelectionStart, cdrDisplayEvents.SelectionEnd);
+            }
+        }
         private void EventCbIgnore_Click(object? sender, EventArgs e)
         {
             
@@ -201,7 +194,9 @@ namespace TimeLog
             }
             txtTestBox.Text = cb.Tag.ToString();
             Activity.SaveActivityList(list);
-            //isIgnored(cb.Tag);
+            RefreshActivityStats();
+
+            
         }
 
         private void PopulateStats(DateTime startDate, DateTime endDate)
@@ -214,15 +209,24 @@ namespace TimeLog
             List<Event> events = new List<Event>(Activity.GetEvents(startDate, endDate));
             TimeSpan timeSpan = endDate - startDate;
             double DaysDisplayed = timeSpan.TotalDays;
+
             
+
             List<Activity> activities = new List<Activity>(Activity.GetActivityList());
-            TimeSpan allEvents = new TimeSpan(0, 0, 0);
-            foreach(Event e in events)
-            {
-                allEvents += e.Duration;
-            }
-            activities.Sort((b, a) =>a.TotalDuration.CompareTo(b.TotalDuration));            
-            
+            TimeSpan allEvents = Activity.AllEventsDuration(events);
+            //foreach(Event e in events)
+            //{
+            //    allEvents += e.Duration;
+            //}
+            activities.Sort((b, a) =>a.TotalDuration.CompareTo(b.TotalDuration));
+
+            TimeSpan unassigned = timeSpan - allEvents;
+            cbUnassignedHrs.Text = unassigned.TotalHours.ToString("0.#");
+            if (cbUnassignedPercent.Checked)
+                cbUnassignedPercent.Text = (unassigned.TotalHours / timeSpan.TotalHours).ToString("P");
+            if (!cbUnassignedPercent.Checked)
+                cbUnassignedPercent.Text = "Ignored";
+
             foreach (Activity a in activities)
             {
                 Button btnStart = new Button();
@@ -230,9 +234,9 @@ namespace TimeLog
 
                 Button btn = new Button();
                 
-                CheckBox btnFirstStat = new CheckBox();
-                CheckBox btnSecondStat = new CheckBox();    
-                CheckBox btnThirdStat = new CheckBox();
+                CheckBox btnHours = new CheckBox();
+                CheckBox btnPercentage = new CheckBox();    
+                CheckBox btnAvgHours = new CheckBox();
 
                 btnStart.Location = new Point(0, 0);
                 btnStart.Text =  "Start";
@@ -271,8 +275,8 @@ namespace TimeLog
 
                 ts = a.GetDuration(startDate, endDate);
 
-                btnFirstStat.Appearance = Appearance.Button;
-                btnFirstStat.Location = new Point(0, 0);
+                btnHours.Appearance = Appearance.Button;
+                btnHours.Location = new Point(0, 0);
                 //if (isIgnored(a.Name) == false)
                 //{
                 //    ts = a.GetDuration(startDate, endDate);
@@ -281,37 +285,39 @@ namespace TimeLog
                 //{
                     
                 //}
-                btnFirstStat.Text = ts.TotalHours.ToString("G2");
+                btnHours.Text = ts.TotalHours.ToString("G2") + " Hrs";
 
-                btnFirstStat.ForeColor = a.TextColor;
-                btnFirstStat.Name = "btn" + a.Name;
-                btnFirstStat.BackColor = a.Color;
-                btnFirstStat.FlatAppearance.BorderSize = 0;
-                btnFirstStat.FlatStyle = FlatStyle.Flat;
-                btnFirstStat.Margin = new Padding(0,5,0,5);
-                btnFirstStat.ForeColor = a.TextColor;
-                btnFirstStat.Size = new Size(75, 23);
-                btnFirstStat.AutoSize = false;                               
+                btnHours.ForeColor = a.TextColor;
+                btnHours.Name = "btn" + a.Name;
+                btnHours.BackColor = a.Color;
+                btnHours.FlatAppearance.BorderSize = 0;
+                btnHours.FlatStyle = FlatStyle.Flat;
+                btnHours.Margin = new Padding(0,5,0,5);
+                btnHours.ForeColor = a.TextColor;
+                btnHours.Size = new Size(75, 23);
+                btnHours.AutoSize = false;                               
 
                 double percentage = ts / allEvents;
+                if (cbUnassignedPercent.Checked)
+                    percentage = ts / timeSpan;
 
-                btnSecondStat.Appearance = Appearance.Button;
-                btnSecondStat.Location = new Point(0, 0);
-                btnSecondStat.Text = percentage.ToString("P");
-                btnSecondStat.ForeColor = a.TextColor;
-                btnSecondStat.Name = "btn" + a.Name;
-                btnSecondStat.BackColor = a.Color;
-                btnSecondStat.FlatAppearance.BorderSize = 0;
-                btnSecondStat.FlatStyle = FlatStyle.Flat;
-                btnSecondStat.Margin = new Padding(0, 5, 0, 5);
-                btnSecondStat.ForeColor = a.TextColor;
-                btnSecondStat.Size = new Size(75, 23);
-                btnSecondStat.AutoSize = false;
+                btnPercentage.Appearance = Appearance.Button;
+                btnPercentage.Location = new Point(0, 0);
+                btnPercentage.Text = percentage.ToString("P");
+                btnPercentage.ForeColor = a.TextColor;
+                btnPercentage.Name = "btn" + a.Name;
+                btnPercentage.BackColor = a.Color;
+                btnPercentage.FlatAppearance.BorderSize = 0;
+                btnPercentage.FlatStyle = FlatStyle.Flat;
+                btnPercentage.Margin = new Padding(0, 5, 0, 5);
+                btnPercentage.ForeColor = a.TextColor;
+                btnPercentage.Size = new Size(75, 23);
+                btnPercentage.AutoSize = false;
                 
                 flowStatsActivity.Controls.Add(btn);
-                flowStatsSecond.Controls.Add(btnSecondStat); 
+                flowStatsSecond.Controls.Add(btnPercentage); 
                
-                flowStatsFirst.Controls.Add(btnFirstStat);
+                flowStatsFirst.Controls.Add(btnHours);
                 
                 double dailyAvg;
                 if (DaysDisplayed > 0)
@@ -323,27 +329,34 @@ namespace TimeLog
                     dailyAvg = 0;
                 }
                 
-                btnThirdStat.Appearance = Appearance.Button;
-                btnThirdStat.Location = new Point(0, 0);
-                btnThirdStat.Text = dailyAvg.ToString();
-                btnThirdStat.ForeColor = a.TextColor;
-                btnThirdStat.Name = "btn" + a.Name;
-                btnThirdStat.BackColor = a.Color;
-                btnThirdStat.FlatAppearance.BorderSize = 0;
-                btnThirdStat.FlatStyle = FlatStyle.Flat;
-                btnThirdStat.Margin = new Padding(0, 5, 0, 5);
-                btnThirdStat.ForeColor = a.TextColor;
-                btnThirdStat.Size = new Size(75, 23);
-                btnThirdStat.AutoSize = false;
+                btnAvgHours.Appearance = Appearance.Button;
+                btnAvgHours.Location = new Point(0, 0);
+                btnAvgHours.Text = dailyAvg.ToString("0.#") + " Hrs/Day";
+                btnAvgHours.ForeColor = a.TextColor;
+                btnAvgHours.Name = "btn" + a.Name;
+                btnAvgHours.BackColor = a.Color;
+                btnAvgHours.FlatAppearance.BorderSize = 0;
+                btnAvgHours.FlatStyle = FlatStyle.Flat;
+                btnAvgHours.Margin = new Padding(0, 5, 0, 5);
+                btnAvgHours.ForeColor = a.TextColor;
+                btnAvgHours.Size = new Size(95, 23);
+                btnAvgHours.AutoSize = false;
 
-                flowStatsThird.Controls.Add(btnThirdStat);
+                flowStatsThird.Controls.Add(btnAvgHours);
 
-                txtTestBox.Text = DaysDisplayed.ToString(); //timeSpan.TotalHours.ToString();
-                txtTestBoxTwo.Text = startDate.ToString("ddd d hh:mm tt");
+                txtTestBox.Text = timeSpan.TotalHours.ToString();
+                txtTestBoxTwo.Text = allEvents.TotalHours.ToString(); // startDate.ToString("ddd d hh:mm tt");
                 TxtTestBoxThree.Text = endDate.ToString("ddd d hh:mm tt");
 
+                //txtTestBox4.Text = timeSpan.TotalHours.ToString();
+                
+                //txtTestBox4.Text = unassigned.TotalHours.ToString();
 
-                  
+               
+
+
+
+
 
             }
             if (flowIgnoreActivity.Controls.Count == 0)
@@ -374,32 +387,7 @@ namespace TimeLog
             Form form = new frmAddPastEvent(a);
             form.ShowDialog();
         }
-
-        
-
-        //private void EventCkBx_Click(object? sender, EventArgs e)
-        //{
-            
-        //    CheckBox chk = sender as CheckBox;
-        //    foreach (Control c in flowLayoutPanel1.Controls)
-        //    {
-        //        if (((CheckBox)c).Checked)
-        //        {
-                    
-        //        }
-        //    }
-        //    if (chk.Checked)
-        //    {
-        //        chk.Font = new Font("Arial", 10, FontStyle.Bold);
-
-        //    }
-        //    if (!chk.Checked)
-        //    {
-        //        chk.Font = new Font("Arial", 10, FontStyle.Regular);
-        //    }
-            
-        //}
-                
+                               
         private void Form1_Load(object sender, EventArgs e)
         {
             lblDailyView.Text = DateTime.Now.ToString("ddd MMM d");
@@ -416,9 +404,7 @@ namespace TimeLog
             PopulateStats(lastWeekStart, DateTime.Now);
             PopulateIgnoreCheckBoxes(lastWeekStart, DateTime.Now);
 
-
         }              
-
        
         private void cdrDisplayEvents_DateChanged(object sender, DateRangeEventArgs e)
         {
@@ -455,37 +441,7 @@ namespace TimeLog
             DisplayDailyView(DateTime.Parse(lblDailyView.Text), dtpDailyView.Value.Hour, dtpDailyView.Value.Minute);
         }
 
-        //private void btnDeleteEvent_Click(object sender, EventArgs e)
-        //{
-        //    activities = Activity.GetActivityList();
-        //    List<Event> eventsSelected = new List<Event>();
-        //    List<DateTime> startTimeToDelete = new List<DateTime>();
-        //    List <string> ckDisplays = new List<string>();
-        //    foreach (Control c in flowLayoutPanel1.Controls)
-        //    {
-        //        if (((CheckBox)c).Checked)
-        //        {
-        //            ckDisplays.Add(c.Name);
-        //        }
-        //    }
-        //    foreach (string c in ckDisplays)
-        //    {
-        //        foreach (Activity activity in activities)
-        //        {
-        //            var itemToRemove = activity.Events.SingleOrDefault(x => x.ButtonName() == c);
-        //            if (itemToRemove != null)
-        //                activity.Events.Remove(itemToRemove);
-                           
-        //        }
-        //    }
-                        
-        //    Activity.SaveActivityList(activities);
-        //    DateTime lastWeekStart = DateTime.Now.AddDays(-7);
-            
-        //    //PopulateEventList(lastWeekStart, DateTime.Now);
-            
-        //}
-
+        
         private void dtpDailyView_ValueChanged(object sender, EventArgs e)
         {
             pnlDailyView.Controls.Clear();
@@ -522,18 +478,13 @@ namespace TimeLog
             if (rbAllTime.Checked)
             {
                 PopulateStats(firstEvent, DateTime.Now);
-                //PopulateEventList(firstEvent, DateTime.Now);
             }
         }
 
         private void rbToday_CheckedChanged(object sender, EventArgs e)
         {
-            List<Event> events = new List<Event>(Activity.GetAllEvents());
-            //DateTime wokeUP = new DateTime();
-            //foreach (Event ev in events.Where(e => e.Name == "Sleep"))
-            //{
-            //    wokeUP = events.Max(a => a.EndTime);
-            //}
+            
+            
            
             btnStatsNextDay.Visible = rbToday.Checked;
             btnStatsPreviousDay.Visible = rbToday.Checked;
@@ -663,9 +614,23 @@ namespace TimeLog
 
         private void rbCustom_CheckedChanged(object sender, EventArgs e)
         {
-            cdrDisplayEvents.Visible = rbCustom.Checked;
-            lblTimeFilterRange.Visible = !rbCustom.Checked;
+            //cdrDisplayEvents.Visible = rbCustom.Checked;
             
+
+            lblCustomStart.Visible = rbCustom.Checked;
+            lblCustomEnd.Visible = rbCustom.Checked;
+            dtpCustomEnd.Visible = rbCustom.Checked;
+            dtpCustomStart.Visible = rbCustom.Checked;
+            TimeSpan ts = dtpCustomEnd.Value - dtpCustomStart.Value;
+            lblTimeFilterRange.Text = ts.TotalDays.ToString("0.##") + " Days";
+            PopulateStats(DateTime.Today, DateTime.Now);
+
+            //if (rbCustom.Checked)
+            //    this.Size = new Size(1275, 930);
+            //else
+            //    this.Size = new Size(970, 930);
+
+
         }
 
         private void btnStatsPreviousDay_Click(object sender, EventArgs e)
@@ -680,6 +645,22 @@ namespace TimeLog
             DateTime day = DateTime.Parse(lblTimeFilterRange.Text).AddDays(1);
             lblTimeFilterRange.Text = day.ToString("ddd MMM d");
             PopulateStats(day, day.AddDays(1));
+        }
+        //TODO test inputs for hour accuracy, add dtpEnd event
+        private void dtpCustomStart_ValueChanged(object sender, EventArgs e)
+        {
+            TimeSpan ts = dtpCustomEnd.Value - dtpCustomStart.Value;
+            lblTimeFilterRange.Text = ts.TotalDays.ToString("0.##") + " Days";
+
+            activities = Activity.GetActivityList();
+            List<Event> events = new List<Event>(Activity.GetEvents(dtpCustomStart.Value, dtpCustomEnd.Value));
+            //PopulateEventList(e.Start, e.End);
+            PopulateStats(dtpCustomStart.Value, dtpCustomEnd.Value);
+        }
+
+        private void cbUnassignedPercent_CheckedChanged(object sender, EventArgs e)
+        {
+            RefreshActivityStats();
         }
     }
 }

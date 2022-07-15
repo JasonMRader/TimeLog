@@ -110,6 +110,8 @@ namespace TimeLog
             List<Activity> activities = new List<Activity>(Activity.GetActivityList());
             Activity a = new Activity();
             string newActivityName = txtNewActivityName.Text;
+            newActivityName = Thread.CurrentThread.CurrentCulture.
+                TextInfo.ToTitleCase(newActivityName.ToLower());
             Color newColor = btnNewCatagoryDisplay.BackColor;
             int uniqueColorCheck = 0;
             int uniqueNameCheck = 0;
@@ -132,7 +134,7 @@ namespace TimeLog
             }
             if (uniqueColorCheck == 0 & uniqueNameCheck == 00)
             {
-                a.Name = txtNewActivityName.Text;
+                a.Name = newActivityName;
                 a.Color = btnNewCatagoryDisplay.BackColor;
                 if (cbWhiteText.Checked)
                 {
@@ -309,6 +311,16 @@ namespace TimeLog
             PopulateButtons(activities); 
             ResetForm();
 
+        }
+        static string UppercaseFirst(string s)
+        {
+            // Check for empty string.
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            return char.ToUpper(s[0]) + s.Substring(1);
         }
     }
 }

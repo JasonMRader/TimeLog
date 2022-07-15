@@ -56,19 +56,7 @@ namespace TimeLog
             }
         }
 
-        public void StartCurrentActivity(DateTime start)
-        {
-            Event e = new Event(start);
-            Events.Add(e);
-
-        }
-        public void EndCurrentActivity(DateTime start)
-        {
-            foreach(Event e in Events.Where(x => x.StartTime == start))
-            {
-                e.EndTime = DateTime.Now;
-            }
-        }
+       
         public void AddPastEvent(string name, DateTime start, DateTime end)
         {
             name = this.Name;
@@ -111,7 +99,7 @@ namespace TimeLog
                 //activity.TotalDuration = (int 0, int 0, int 0);
                 foreach (Event e in activity.Events)
                 {
-                    if (e.StartTime > fromTime && e.StartTime < toTime)
+                    if (e.StartTime > fromTime && e.StartTime < toTime && activity.isIgnored == false)
                     {
                         e.Color = activity.Color;
                         e.TextColor = activity.TextColor;
@@ -124,6 +112,15 @@ namespace TimeLog
 
             return events;
 
+        }
+        public static TimeSpan AllEventsDuration(List<Event> events)
+        {
+            TimeSpan allEvents = new TimeSpan(0, 0, 0);
+            foreach (Event e in events)
+            {
+                allEvents += e.Duration;
+            }
+            return allEvents;
         }
         public static List<Event> GetAllEvents()
         {
@@ -183,6 +180,7 @@ namespace TimeLog
             return color;
 
         }
+        
 
     }
     

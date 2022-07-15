@@ -64,6 +64,7 @@
             this.btnPrevious = new System.Windows.Forms.Button();
             this.rdoWeek = new System.Windows.Forms.RadioButton();
             this.rdoDay = new System.Windows.Forms.RadioButton();
+            this.btnAddMore = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -360,18 +361,18 @@
             // flowEvents
             // 
             this.flowEvents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flowEvents.Location = new System.Drawing.Point(315, 147);
+            this.flowEvents.Location = new System.Drawing.Point(279, 147);
             this.flowEvents.Name = "flowEvents";
-            this.flowEvents.Size = new System.Drawing.Size(275, 273);
+            this.flowEvents.Size = new System.Drawing.Size(315, 273);
             this.flowEvents.TabIndex = 10;
             // 
             // btnDeleteEvents
             // 
             this.btnDeleteEvents.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnDeleteEvents.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDeleteEvents.Location = new System.Drawing.Point(315, 436);
+            this.btnDeleteEvents.Location = new System.Drawing.Point(279, 436);
             this.btnDeleteEvents.Name = "btnDeleteEvents";
-            this.btnDeleteEvents.Size = new System.Drawing.Size(275, 23);
+            this.btnDeleteEvents.Size = new System.Drawing.Size(311, 23);
             this.btnDeleteEvents.TabIndex = 11;
             this.btnDeleteEvents.Text = "Delete Events";
             this.btnDeleteEvents.UseVisualStyleBackColor = true;
@@ -390,25 +391,26 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lblTimeFrame);
             this.groupBox1.Controls.Add(this.btnNext);
             this.groupBox1.Controls.Add(this.btnPrevious);
             this.groupBox1.Controls.Add(this.rdoWeek);
             this.groupBox1.Controls.Add(this.rdoDay);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Location = new System.Drawing.Point(315, 53);
+            this.groupBox1.Location = new System.Drawing.Point(279, 53);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(275, 80);
+            this.groupBox1.Size = new System.Drawing.Size(311, 54);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Time Frame";
+            this.groupBox1.Visible = false;
             // 
             // lblTimeFrame
             // 
             this.lblTimeFrame.AutoSize = true;
-            this.lblTimeFrame.Location = new System.Drawing.Point(92, 51);
+            this.lblTimeFrame.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblTimeFrame.Location = new System.Drawing.Point(372, 112);
             this.lblTimeFrame.Name = "lblTimeFrame";
-            this.lblTimeFrame.Size = new System.Drawing.Size(71, 15);
+            this.lblTimeFrame.Size = new System.Drawing.Size(105, 21);
             this.lblTimeFrame.TabIndex = 3;
             this.lblTimeFrame.Text = "TimeDisplay";
             // 
@@ -416,7 +418,7 @@
             // 
             this.btnNext.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNext.Location = new System.Drawing.Point(181, 47);
+            this.btnNext.Location = new System.Drawing.Point(221, 18);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(45, 23);
             this.btnNext.TabIndex = 2;
@@ -428,7 +430,7 @@
             // 
             this.btnPrevious.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnPrevious.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrevious.Location = new System.Drawing.Point(22, 47);
+            this.btnPrevious.Location = new System.Drawing.Point(10, 22);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(47, 23);
             this.btnPrevious.TabIndex = 1;
@@ -460,11 +462,23 @@
             this.rdoDay.UseVisualStyleBackColor = true;
             this.rdoDay.CheckedChanged += new System.EventHandler(this.rdoDay_CheckedChanged);
             // 
+            // btnAddMore
+            // 
+            this.btnAddMore.Location = new System.Drawing.Point(164, 383);
+            this.btnAddMore.Name = "btnAddMore";
+            this.btnAddMore.Size = new System.Drawing.Size(75, 23);
+            this.btnAddMore.TabIndex = 14;
+            this.btnAddMore.Text = "Add More";
+            this.btnAddMore.UseVisualStyleBackColor = true;
+            this.btnAddMore.Click += new System.EventHandler(this.btnAddMore_Click);
+            // 
             // frmAddPastEvent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(602, 490);
+            this.Controls.Add(this.lblTimeFrame);
+            this.Controls.Add(this.btnAddMore);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.flowActDisplay);
             this.Controls.Add(this.btnDeleteEvents);
@@ -544,5 +558,6 @@
         private Button btnPrevious;
         private RadioButton rdoWeek;
         private RadioButton rdoDay;
+        private Button btnAddMore;
     }
 }

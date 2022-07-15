@@ -49,30 +49,37 @@
             this.rbAllTime = new System.Windows.Forms.RadioButton();
             this.rbMonth = new System.Windows.Forms.RadioButton();
             this.gbFilters = new System.Windows.Forms.GroupBox();
+            this.rbCustom = new System.Windows.Forms.RadioButton();
+            this.rbToday = new System.Windows.Forms.RadioButton();
             this.lblTimeFilterRange = new System.Windows.Forms.Label();
             this.btnStatsPreviousDay = new System.Windows.Forms.Button();
             this.btnStatsNextDay = new System.Windows.Forms.Button();
-            this.rbCustom = new System.Windows.Forms.RadioButton();
             this.btnLastMonth = new System.Windows.Forms.Button();
             this.btnNextMonth = new System.Windows.Forms.Button();
             this.btnNextWeek = new System.Windows.Forms.Button();
             this.btnLastWeek = new System.Windows.Forms.Button();
-            this.rbToday = new System.Windows.Forms.RadioButton();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.flowStatsThird = new System.Windows.Forms.FlowLayoutPanel();
             this.txtTestBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtTestBoxTwo = new System.Windows.Forms.TextBox();
             this.TxtTestBoxThree = new System.Windows.Forms.TextBox();
             this.flowIgnoreActivity = new System.Windows.Forms.FlowLayoutPanel();
-            this.label7 = new System.Windows.Forms.Label();
             this.lbxTest = new System.Windows.Forms.ListBox();
             this.flowStartCurrent = new System.Windows.Forms.FlowLayoutPanel();
+            this.txtTestBox4 = new System.Windows.Forms.TextBox();
+            this.btnUnassigned = new System.Windows.Forms.Button();
+            this.cbUnassignedHrs = new System.Windows.Forms.CheckBox();
+            this.cbUnassignedHrsPerDay = new System.Windows.Forms.CheckBox();
+            this.cbUnassignedPercent = new System.Windows.Forms.CheckBox();
+            this.cbIncluded = new System.Windows.Forms.CheckBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.dtpCustomStart = new System.Windows.Forms.DateTimePicker();
+            this.dtpCustomEnd = new System.Windows.Forms.DateTimePicker();
+            this.lblCustomStart = new System.Windows.Forms.Label();
+            this.lblCustomEnd = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.gbFilters.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // timer1
@@ -83,7 +90,7 @@
             // cdrDisplayEvents
             // 
             this.cdrDisplayEvents.FirstDayOfWeek = System.Windows.Forms.Day.Monday;
-            this.cdrDisplayEvents.Location = new System.Drawing.Point(801, 16);
+            this.cdrDisplayEvents.Location = new System.Drawing.Point(933, 33);
             this.cdrDisplayEvents.MaxSelectionCount = 31;
             this.cdrDisplayEvents.Name = "cdrDisplayEvents";
             this.cdrDisplayEvents.TabIndex = 11;
@@ -92,7 +99,7 @@
             // 
             // btnCreateNewEventCurrent
             // 
-            this.btnCreateNewEventCurrent.Location = new System.Drawing.Point(850, 805);
+            this.btnCreateNewEventCurrent.Location = new System.Drawing.Point(690, 930);
             this.btnCreateNewEventCurrent.Name = "btnCreateNewEventCurrent";
             this.btnCreateNewEventCurrent.Size = new System.Drawing.Size(80, 34);
             this.btnCreateNewEventCurrent.TabIndex = 12;
@@ -141,8 +148,10 @@
             // 
             // flowStatsActivity
             // 
+            this.flowStatsActivity.AutoSize = true;
             this.flowStatsActivity.BackColor = System.Drawing.Color.White;
-            this.flowStatsActivity.Location = new System.Drawing.Point(406, 230);
+            this.flowStatsActivity.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowStatsActivity.Location = new System.Drawing.Point(86, 0);
             this.flowStatsActivity.Margin = new System.Windows.Forms.Padding(0);
             this.flowStatsActivity.Name = "flowStatsActivity";
             this.flowStatsActivity.Size = new System.Drawing.Size(128, 364);
@@ -150,8 +159,10 @@
             // 
             // flowStatsFirst
             // 
+            this.flowStatsFirst.AutoSize = true;
             this.flowStatsFirst.BackColor = System.Drawing.Color.White;
-            this.flowStatsFirst.Location = new System.Drawing.Point(534, 230);
+            this.flowStatsFirst.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowStatsFirst.Location = new System.Drawing.Point(214, 0);
             this.flowStatsFirst.Margin = new System.Windows.Forms.Padding(0);
             this.flowStatsFirst.Name = "flowStatsFirst";
             this.flowStatsFirst.Size = new System.Drawing.Size(100, 364);
@@ -159,8 +170,10 @@
             // 
             // flowStatsSecond
             // 
+            this.flowStatsSecond.AutoSize = true;
             this.flowStatsSecond.BackColor = System.Drawing.Color.White;
-            this.flowStatsSecond.Location = new System.Drawing.Point(735, 230);
+            this.flowStatsSecond.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowStatsSecond.Location = new System.Drawing.Point(415, 0);
             this.flowStatsSecond.Margin = new System.Windows.Forms.Padding(0);
             this.flowStatsSecond.Name = "flowStatsSecond";
             this.flowStatsSecond.Size = new System.Drawing.Size(100, 364);
@@ -195,7 +208,7 @@
             this.panel1.Controls.Add(this.pnlDailyView);
             this.panel1.Location = new System.Drawing.Point(7, 87);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(287, 740);
+            this.panel1.Size = new System.Drawing.Size(287, 537);
             this.panel1.TabIndex = 28;
             // 
             // btnNextHour
@@ -231,7 +244,7 @@
             // rbWeek
             // 
             this.rbWeek.AutoSize = true;
-            this.rbWeek.Location = new System.Drawing.Point(189, 22);
+            this.rbWeek.Location = new System.Drawing.Point(291, 22);
             this.rbWeek.Name = "rbWeek";
             this.rbWeek.Size = new System.Drawing.Size(54, 19);
             this.rbWeek.TabIndex = 0;
@@ -255,7 +268,7 @@
             // rbMonth
             // 
             this.rbMonth.AutoSize = true;
-            this.rbMonth.Location = new System.Drawing.Point(263, 22);
+            this.rbMonth.Location = new System.Drawing.Point(394, 22);
             this.rbMonth.Name = "rbMonth";
             this.rbMonth.Size = new System.Drawing.Size(61, 19);
             this.rbMonth.TabIndex = 2;
@@ -265,37 +278,53 @@
             // 
             // gbFilters
             // 
-            this.gbFilters.Controls.Add(this.lblTimeFilterRange);
-            this.gbFilters.Controls.Add(this.btnStatsPreviousDay);
-            this.gbFilters.Controls.Add(this.btnStatsNextDay);
             this.gbFilters.Controls.Add(this.rbCustom);
-            this.gbFilters.Controls.Add(this.btnLastMonth);
-            this.gbFilters.Controls.Add(this.btnNextMonth);
-            this.gbFilters.Controls.Add(this.btnNextWeek);
-            this.gbFilters.Controls.Add(this.btnLastWeek);
             this.gbFilters.Controls.Add(this.rbToday);
             this.gbFilters.Controls.Add(this.rbMonth);
             this.gbFilters.Controls.Add(this.rbAllTime);
             this.gbFilters.Controls.Add(this.rbWeek);
             this.gbFilters.Location = new System.Drawing.Point(331, 56);
             this.gbFilters.Name = "gbFilters";
-            this.gbFilters.Size = new System.Drawing.Size(455, 95);
+            this.gbFilters.Size = new System.Drawing.Size(590, 63);
             this.gbFilters.TabIndex = 15;
             this.gbFilters.TabStop = false;
             this.gbFilters.Text = "Filters";
             // 
+            // rbCustom
+            // 
+            this.rbCustom.AutoSize = true;
+            this.rbCustom.Location = new System.Drawing.Point(517, 22);
+            this.rbCustom.Name = "rbCustom";
+            this.rbCustom.Size = new System.Drawing.Size(67, 19);
+            this.rbCustom.TabIndex = 35;
+            this.rbCustom.Text = "Custom";
+            this.rbCustom.UseVisualStyleBackColor = true;
+            this.rbCustom.CheckedChanged += new System.EventHandler(this.rbCustom_CheckedChanged);
+            // 
+            // rbToday
+            // 
+            this.rbToday.AutoSize = true;
+            this.rbToday.Location = new System.Drawing.Point(160, 22);
+            this.rbToday.Name = "rbToday";
+            this.rbToday.Size = new System.Drawing.Size(45, 19);
+            this.rbToday.TabIndex = 3;
+            this.rbToday.Text = "Day";
+            this.rbToday.UseVisualStyleBackColor = true;
+            this.rbToday.CheckedChanged += new System.EventHandler(this.rbToday_CheckedChanged);
+            // 
             // lblTimeFilterRange
             // 
             this.lblTimeFilterRange.AutoSize = true;
-            this.lblTimeFilterRange.Location = new System.Drawing.Point(193, 62);
+            this.lblTimeFilterRange.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblTimeFilterRange.Location = new System.Drawing.Point(578, 130);
             this.lblTimeFilterRange.Name = "lblTimeFilterRange";
-            this.lblTimeFilterRange.Size = new System.Drawing.Size(50, 15);
+            this.lblTimeFilterRange.Size = new System.Drawing.Size(80, 25);
             this.lblTimeFilterRange.TabIndex = 41;
             this.lblTimeFilterRange.Text = "All Time";
             // 
             // btnStatsPreviousDay
             // 
-            this.btnStatsPreviousDay.Location = new System.Drawing.Point(97, 49);
+            this.btnStatsPreviousDay.Location = new System.Drawing.Point(491, 125);
             this.btnStatsPreviousDay.Name = "btnStatsPreviousDay";
             this.btnStatsPreviousDay.Size = new System.Drawing.Size(23, 40);
             this.btnStatsPreviousDay.TabIndex = 40;
@@ -306,7 +335,7 @@
             // 
             // btnStatsNextDay
             // 
-            this.btnStatsNextDay.Location = new System.Drawing.Point(327, 49);
+            this.btnStatsNextDay.Location = new System.Drawing.Point(747, 123);
             this.btnStatsNextDay.Name = "btnStatsNextDay";
             this.btnStatsNextDay.Size = new System.Drawing.Size(23, 40);
             this.btnStatsNextDay.TabIndex = 41;
@@ -315,20 +344,9 @@
             this.btnStatsNextDay.Visible = false;
             this.btnStatsNextDay.Click += new System.EventHandler(this.btnStatsNextDay_Click);
             // 
-            // rbCustom
-            // 
-            this.rbCustom.AutoSize = true;
-            this.rbCustom.Location = new System.Drawing.Point(345, 22);
-            this.rbCustom.Name = "rbCustom";
-            this.rbCustom.Size = new System.Drawing.Size(67, 19);
-            this.rbCustom.TabIndex = 35;
-            this.rbCustom.Text = "Custom";
-            this.rbCustom.UseVisualStyleBackColor = true;
-            this.rbCustom.CheckedChanged += new System.EventHandler(this.rbCustom_CheckedChanged);
-            // 
             // btnLastMonth
             // 
-            this.btnLastMonth.Location = new System.Drawing.Point(97, 49);
+            this.btnLastMonth.Location = new System.Drawing.Point(491, 125);
             this.btnLastMonth.Name = "btnLastMonth";
             this.btnLastMonth.Size = new System.Drawing.Size(23, 40);
             this.btnLastMonth.TabIndex = 34;
@@ -339,7 +357,7 @@
             // 
             // btnNextMonth
             // 
-            this.btnNextMonth.Location = new System.Drawing.Point(327, 49);
+            this.btnNextMonth.Location = new System.Drawing.Point(747, 123);
             this.btnNextMonth.Name = "btnNextMonth";
             this.btnNextMonth.Size = new System.Drawing.Size(23, 40);
             this.btnNextMonth.TabIndex = 34;
@@ -350,7 +368,7 @@
             // 
             // btnNextWeek
             // 
-            this.btnNextWeek.Location = new System.Drawing.Point(327, 49);
+            this.btnNextWeek.Location = new System.Drawing.Point(747, 123);
             this.btnNextWeek.Name = "btnNextWeek";
             this.btnNextWeek.Size = new System.Drawing.Size(23, 40);
             this.btnNextWeek.TabIndex = 5;
@@ -361,7 +379,7 @@
             // 
             // btnLastWeek
             // 
-            this.btnLastWeek.Location = new System.Drawing.Point(97, 49);
+            this.btnLastWeek.Location = new System.Drawing.Point(491, 125);
             this.btnLastWeek.Name = "btnLastWeek";
             this.btnLastWeek.Size = new System.Drawing.Size(23, 40);
             this.btnLastWeek.TabIndex = 5;
@@ -370,56 +388,11 @@
             this.btnLastWeek.Visible = false;
             this.btnLastWeek.Click += new System.EventHandler(this.btnLastWeek_Click);
             // 
-            // rbToday
-            // 
-            this.rbToday.AutoSize = true;
-            this.rbToday.Location = new System.Drawing.Point(110, 22);
-            this.rbToday.Name = "rbToday";
-            this.rbToday.Size = new System.Drawing.Size(56, 19);
-            this.rbToday.TabIndex = 3;
-            this.rbToday.Text = "Today";
-            this.rbToday.UseVisualStyleBackColor = true;
-            this.rbToday.CheckedChanged += new System.EventHandler(this.rbToday_CheckedChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(406, 204);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 15);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "Activity";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(534, 204);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 15);
-            this.label3.TabIndex = 32;
-            this.label3.Text = "Total Hours";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(735, 204);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(66, 15);
-            this.label4.TabIndex = 32;
-            this.label4.Text = "Percentage";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(634, 204);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 15);
-            this.label5.TabIndex = 32;
-            this.label5.Text = "Per Day";
-            // 
             // flowStatsThird
             // 
-            this.flowStatsThird.Location = new System.Drawing.Point(634, 230);
+            this.flowStatsThird.AutoSize = true;
+            this.flowStatsThird.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowStatsThird.Location = new System.Drawing.Point(314, 0);
             this.flowStatsThird.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.flowStatsThird.Name = "flowStatsThird";
             this.flowStatsThird.Size = new System.Drawing.Size(100, 364);
@@ -427,7 +400,7 @@
             // 
             // txtTestBox
             // 
-            this.txtTestBox.Location = new System.Drawing.Point(629, 786);
+            this.txtTestBox.Location = new System.Drawing.Point(500, 893);
             this.txtTestBox.Name = "txtTestBox";
             this.txtTestBox.Size = new System.Drawing.Size(100, 23);
             this.txtTestBox.TabIndex = 34;
@@ -435,7 +408,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(629, 768);
+            this.label6.Location = new System.Drawing.Point(500, 875);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(47, 15);
             this.label6.TabIndex = 35;
@@ -443,79 +416,190 @@
             // 
             // txtTestBoxTwo
             // 
-            this.txtTestBoxTwo.Location = new System.Drawing.Point(629, 812);
+            this.txtTestBoxTwo.Location = new System.Drawing.Point(500, 919);
             this.txtTestBoxTwo.Name = "txtTestBoxTwo";
             this.txtTestBoxTwo.Size = new System.Drawing.Size(157, 23);
             this.txtTestBoxTwo.TabIndex = 36;
             // 
             // TxtTestBoxThree
             // 
-            this.TxtTestBoxThree.Location = new System.Drawing.Point(629, 841);
+            this.TxtTestBoxThree.Location = new System.Drawing.Point(500, 948);
             this.TxtTestBoxThree.Name = "TxtTestBoxThree";
             this.TxtTestBoxThree.Size = new System.Drawing.Size(157, 23);
             this.TxtTestBoxThree.TabIndex = 36;
             // 
             // flowIgnoreActivity
             // 
-            this.flowIgnoreActivity.Location = new System.Drawing.Point(835, 230);
+            this.flowIgnoreActivity.AutoSize = true;
+            this.flowIgnoreActivity.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowIgnoreActivity.Location = new System.Drawing.Point(515, 0);
             this.flowIgnoreActivity.Margin = new System.Windows.Forms.Padding(0);
             this.flowIgnoreActivity.Name = "flowIgnoreActivity";
             this.flowIgnoreActivity.Size = new System.Drawing.Size(100, 364);
             this.flowIgnoreActivity.TabIndex = 37;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(835, 204);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(46, 15);
-            this.label7.TabIndex = 38;
-            this.label7.Text = "Ignore?";
-            // 
             // lbxTest
             // 
             this.lbxTest.FormattingEnabled = true;
             this.lbxTest.ItemHeight = 15;
-            this.lbxTest.Location = new System.Drawing.Point(471, 770);
+            this.lbxTest.Location = new System.Drawing.Point(354, 885);
             this.lbxTest.Name = "lbxTest";
             this.lbxTest.Size = new System.Drawing.Size(120, 94);
             this.lbxTest.TabIndex = 39;
             // 
             // flowStartCurrent
             // 
-            this.flowStartCurrent.Location = new System.Drawing.Point(331, 230);
+            this.flowStartCurrent.AutoSize = true;
+            this.flowStartCurrent.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowStartCurrent.Location = new System.Drawing.Point(11, 0);
             this.flowStartCurrent.Margin = new System.Windows.Forms.Padding(0);
             this.flowStartCurrent.Name = "flowStartCurrent";
             this.flowStartCurrent.Size = new System.Drawing.Size(75, 364);
             this.flowStartCurrent.TabIndex = 40;
+            // 
+            // txtTestBox4
+            // 
+            this.txtTestBox4.Location = new System.Drawing.Point(670, 893);
+            this.txtTestBox4.Name = "txtTestBox4";
+            this.txtTestBox4.Size = new System.Drawing.Size(100, 23);
+            this.txtTestBox4.TabIndex = 41;
+            // 
+            // btnUnassigned
+            // 
+            this.btnUnassigned.Location = new System.Drawing.Point(408, 178);
+            this.btnUnassigned.Name = "btnUnassigned";
+            this.btnUnassigned.Size = new System.Drawing.Size(128, 23);
+            this.btnUnassigned.TabIndex = 42;
+            this.btnUnassigned.Text = "Unassigned Time";
+            this.btnUnassigned.UseVisualStyleBackColor = true;
+            // 
+            // cbUnassignedHrs
+            // 
+            this.cbUnassignedHrs.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbUnassignedHrs.Location = new System.Drawing.Point(536, 178);
+            this.cbUnassignedHrs.Name = "cbUnassignedHrs";
+            this.cbUnassignedHrs.Size = new System.Drawing.Size(75, 23);
+            this.cbUnassignedHrs.TabIndex = 43;
+            this.cbUnassignedHrs.Text = "Hrs";
+            this.cbUnassignedHrs.UseVisualStyleBackColor = true;
+            // 
+            // cbUnassignedHrsPerDay
+            // 
+            this.cbUnassignedHrsPerDay.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbUnassignedHrsPerDay.Location = new System.Drawing.Point(636, 178);
+            this.cbUnassignedHrsPerDay.Name = "cbUnassignedHrsPerDay";
+            this.cbUnassignedHrsPerDay.Size = new System.Drawing.Size(95, 23);
+            this.cbUnassignedHrsPerDay.TabIndex = 43;
+            this.cbUnassignedHrsPerDay.Text = "Hrs/Day";
+            this.cbUnassignedHrsPerDay.UseVisualStyleBackColor = true;
+            // 
+            // cbUnassignedPercent
+            // 
+            this.cbUnassignedPercent.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbUnassignedPercent.Location = new System.Drawing.Point(737, 178);
+            this.cbUnassignedPercent.Name = "cbUnassignedPercent";
+            this.cbUnassignedPercent.Size = new System.Drawing.Size(75, 23);
+            this.cbUnassignedPercent.TabIndex = 43;
+            this.cbUnassignedPercent.Text = "unass %";
+            this.cbUnassignedPercent.UseVisualStyleBackColor = true;
+            this.cbUnassignedPercent.CheckedChanged += new System.EventHandler(this.cbUnassignedPercent_CheckedChanged);
+            // 
+            // cbIncluded
+            // 
+            this.cbIncluded.Appearance = System.Windows.Forms.Appearance.Button;
+            this.cbIncluded.AutoSize = true;
+            this.cbIncluded.Location = new System.Drawing.Point(837, 176);
+            this.cbIncluded.Name = "cbIncluded";
+            this.cbIncluded.Size = new System.Drawing.Size(61, 25);
+            this.cbIncluded.TabIndex = 43;
+            this.cbIncluded.Text = "include?";
+            this.cbIncluded.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.AutoScroll = true;
+            this.panel2.Controls.Add(this.flowStatsActivity);
+            this.panel2.Controls.Add(this.flowStatsFirst);
+            this.panel2.Controls.Add(this.flowStatsSecond);
+            this.panel2.Controls.Add(this.flowStatsThird);
+            this.panel2.Controls.Add(this.flowIgnoreActivity);
+            this.panel2.Controls.Add(this.flowStartCurrent);
+            this.panel2.Location = new System.Drawing.Point(344, 207);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(649, 392);
+            this.panel2.TabIndex = 44;
+            // 
+            // dtpCustomStart
+            // 
+            this.dtpCustomStart.Location = new System.Drawing.Point(331, 143);
+            this.dtpCustomStart.Name = "dtpCustomStart";
+            this.dtpCustomStart.Size = new System.Drawing.Size(200, 23);
+            this.dtpCustomStart.TabIndex = 45;
+            this.dtpCustomStart.Visible = false;
+            this.dtpCustomStart.ValueChanged += new System.EventHandler(this.dtpCustomStart_ValueChanged);
+            // 
+            // dtpCustomEnd
+            // 
+            this.dtpCustomEnd.Location = new System.Drawing.Point(719, 142);
+            this.dtpCustomEnd.Name = "dtpCustomEnd";
+            this.dtpCustomEnd.Size = new System.Drawing.Size(200, 23);
+            this.dtpCustomEnd.TabIndex = 46;
+            this.dtpCustomEnd.Visible = false;
+            // 
+            // lblCustomStart
+            // 
+            this.lblCustomStart.AutoSize = true;
+            this.lblCustomStart.Location = new System.Drawing.Point(331, 125);
+            this.lblCustomStart.Name = "lblCustomStart";
+            this.lblCustomStart.Size = new System.Drawing.Size(38, 15);
+            this.lblCustomStart.TabIndex = 47;
+            this.lblCustomStart.Text = "From:";
+            this.lblCustomStart.Visible = false;
+            // 
+            // lblCustomEnd
+            // 
+            this.lblCustomEnd.AutoSize = true;
+            this.lblCustomEnd.Location = new System.Drawing.Point(719, 125);
+            this.lblCustomEnd.Name = "lblCustomEnd";
+            this.lblCustomEnd.Size = new System.Drawing.Size(22, 15);
+            this.lblCustomEnd.TabIndex = 48;
+            this.lblCustomEnd.Text = "To:";
+            this.lblCustomEnd.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1041, 892);
-            this.Controls.Add(this.flowStartCurrent);
+            this.ClientSize = new System.Drawing.Size(1019, 689);
+            this.Controls.Add(this.btnUnassigned);
+            this.Controls.Add(this.cbIncluded);
+            this.Controls.Add(this.lblCustomEnd);
+            this.Controls.Add(this.lblCustomStart);
+            this.Controls.Add(this.cbUnassignedPercent);
+            this.Controls.Add(this.dtpCustomEnd);
+            this.Controls.Add(this.dtpCustomStart);
+            this.Controls.Add(this.cbUnassignedHrsPerDay);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.lblTimeFilterRange);
+            this.Controls.Add(this.cbUnassignedHrs);
+            this.Controls.Add(this.btnStatsPreviousDay);
+            this.Controls.Add(this.txtTestBox4);
+            this.Controls.Add(this.btnStatsNextDay);
             this.Controls.Add(this.lbxTest);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.flowIgnoreActivity);
+            this.Controls.Add(this.btnLastMonth);
+            this.Controls.Add(this.btnNextMonth);
             this.Controls.Add(this.TxtTestBoxThree);
+            this.Controls.Add(this.btnNextWeek);
             this.Controls.Add(this.txtTestBoxTwo);
+            this.Controls.Add(this.btnLastWeek);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtTestBox);
-            this.Controls.Add(this.flowStatsThird);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnAddEditActivities);
             this.Controls.Add(this.btnPreviousHour);
             this.Controls.Add(this.btnNextHour);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.flowStatsSecond);
             this.Controls.Add(this.dtpDailyView);
-            this.Controls.Add(this.flowStatsFirst);
-            this.Controls.Add(this.flowStatsActivity);
             this.Controls.Add(this.lblDailyView);
             this.Controls.Add(this.btnPreviousDay);
             this.Controls.Add(this.btnNextDay);
@@ -529,6 +613,8 @@
             this.panel1.ResumeLayout(false);
             this.gbFilters.ResumeLayout(false);
             this.gbFilters.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -560,22 +646,28 @@
         private Button btnLastWeek;
         private Button btnLastMonth;
         private Button btnNextMonth;
-        private Label label2;
-        private Label label3;
-        private Label label4;
-        private Label label5;
         private FlowLayoutPanel flowStatsThird;
         private TextBox txtTestBox;
         private Label label6;
         private TextBox txtTestBoxTwo;
         private TextBox TxtTestBoxThree;
         private FlowLayoutPanel flowIgnoreActivity;
-        private Label label7;
         private ListBox lbxTest;
         private RadioButton rbCustom;
         private Button btnStatsPreviousDay;
         private Button btnStatsNextDay;
         private FlowLayoutPanel flowStartCurrent;
         private Label lblTimeFilterRange;
+        private TextBox txtTestBox4;
+        private Button btnUnassigned;
+        private CheckBox cbUnassignedHrs;
+        private CheckBox cbUnassignedHrsPerDay;
+        private CheckBox cbUnassignedPercent;
+        private CheckBox cbIncluded;
+        private Panel panel2;
+        private DateTimePicker dtpCustomStart;
+        private DateTimePicker dtpCustomEnd;
+        private Label lblCustomStart;
+        private Label lblCustomEnd;
     }
 }
