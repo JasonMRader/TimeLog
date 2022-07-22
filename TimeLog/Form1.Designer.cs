@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.cdrDisplayEvents = new System.Windows.Forms.MonthCalendar();
             this.btnCreateNewEventCurrent = new System.Windows.Forms.Button();
             this.pnlDailyView = new System.Windows.Forms.Panel();
             this.btnNextDay = new System.Windows.Forms.Button();
@@ -71,12 +70,12 @@
             this.cbUnassignedHrs = new System.Windows.Forms.CheckBox();
             this.cbUnassignedHrsPerDay = new System.Windows.Forms.CheckBox();
             this.cbUnassignedPercent = new System.Windows.Forms.CheckBox();
-            this.cbIncluded = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dtpCustomStart = new System.Windows.Forms.DateTimePicker();
             this.dtpCustomEnd = new System.Windows.Forms.DateTimePicker();
             this.lblCustomStart = new System.Windows.Forms.Label();
             this.lblCustomEnd = new System.Windows.Forms.Label();
+            this.btnUnignoreAll = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.gbFilters.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -87,19 +86,9 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // cdrDisplayEvents
-            // 
-            this.cdrDisplayEvents.FirstDayOfWeek = System.Windows.Forms.Day.Monday;
-            this.cdrDisplayEvents.Location = new System.Drawing.Point(933, 33);
-            this.cdrDisplayEvents.MaxSelectionCount = 31;
-            this.cdrDisplayEvents.Name = "cdrDisplayEvents";
-            this.cdrDisplayEvents.TabIndex = 11;
-            this.cdrDisplayEvents.Visible = false;
-            this.cdrDisplayEvents.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.cdrDisplayEvents_DateChanged);
-            // 
             // btnCreateNewEventCurrent
             // 
-            this.btnCreateNewEventCurrent.Location = new System.Drawing.Point(690, 930);
+            this.btnCreateNewEventCurrent.Location = new System.Drawing.Point(719, 886);
             this.btnCreateNewEventCurrent.Name = "btnCreateNewEventCurrent";
             this.btnCreateNewEventCurrent.Size = new System.Drawing.Size(80, 34);
             this.btnCreateNewEventCurrent.TabIndex = 12;
@@ -110,7 +99,7 @@
             // 
             // pnlDailyView
             // 
-            this.pnlDailyView.BackColor = System.Drawing.Color.Black;
+            this.pnlDailyView.BackColor = System.Drawing.Color.WhiteSmoke;
             this.pnlDailyView.Location = new System.Drawing.Point(61, 18);
             this.pnlDailyView.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.pnlDailyView.Name = "pnlDailyView";
@@ -154,7 +143,7 @@
             this.flowStatsActivity.Location = new System.Drawing.Point(86, 0);
             this.flowStatsActivity.Margin = new System.Windows.Forms.Padding(0);
             this.flowStatsActivity.Name = "flowStatsActivity";
-            this.flowStatsActivity.Size = new System.Drawing.Size(128, 364);
+            this.flowStatsActivity.Size = new System.Drawing.Size(128, 579);
             this.flowStatsActivity.TabIndex = 24;
             // 
             // flowStatsFirst
@@ -165,7 +154,7 @@
             this.flowStatsFirst.Location = new System.Drawing.Point(214, 0);
             this.flowStatsFirst.Margin = new System.Windows.Forms.Padding(0);
             this.flowStatsFirst.Name = "flowStatsFirst";
-            this.flowStatsFirst.Size = new System.Drawing.Size(100, 364);
+            this.flowStatsFirst.Size = new System.Drawing.Size(100, 579);
             this.flowStatsFirst.TabIndex = 24;
             // 
             // flowStatsSecond
@@ -176,7 +165,7 @@
             this.flowStatsSecond.Location = new System.Drawing.Point(415, 0);
             this.flowStatsSecond.Margin = new System.Windows.Forms.Padding(0);
             this.flowStatsSecond.Name = "flowStatsSecond";
-            this.flowStatsSecond.Size = new System.Drawing.Size(100, 364);
+            this.flowStatsSecond.Size = new System.Drawing.Size(100, 579);
             this.flowStatsSecond.TabIndex = 24;
             // 
             // dtpDailyView
@@ -191,6 +180,7 @@
             // 
             // pnlDvTime
             // 
+            this.pnlDvTime.BackColor = System.Drawing.Color.DimGray;
             this.pnlDvTime.Location = new System.Drawing.Point(18, 18);
             this.pnlDvTime.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.pnlDvTime.Name = "pnlDvTime";
@@ -203,12 +193,12 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panel1.AutoScroll = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.pnlDvTime);
             this.panel1.Controls.Add(this.pnlDailyView);
             this.panel1.Location = new System.Drawing.Point(7, 87);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(287, 537);
+            this.panel1.Size = new System.Drawing.Size(287, 883);
             this.panel1.TabIndex = 28;
             // 
             // btnNextHour
@@ -233,7 +223,7 @@
             // 
             // btnAddEditActivities
             // 
-            this.btnAddEditActivities.Location = new System.Drawing.Point(344, 617);
+            this.btnAddEditActivities.Location = new System.Drawing.Point(352, 780);
             this.btnAddEditActivities.Name = "btnAddEditActivities";
             this.btnAddEditActivities.Size = new System.Drawing.Size(591, 33);
             this.btnAddEditActivities.TabIndex = 31;
@@ -283,7 +273,7 @@
             this.gbFilters.Controls.Add(this.rbMonth);
             this.gbFilters.Controls.Add(this.rbAllTime);
             this.gbFilters.Controls.Add(this.rbWeek);
-            this.gbFilters.Location = new System.Drawing.Point(331, 56);
+            this.gbFilters.Location = new System.Drawing.Point(329, 12);
             this.gbFilters.Name = "gbFilters";
             this.gbFilters.Size = new System.Drawing.Size(590, 63);
             this.gbFilters.TabIndex = 15;
@@ -316,7 +306,7 @@
             // 
             this.lblTimeFilterRange.AutoSize = true;
             this.lblTimeFilterRange.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblTimeFilterRange.Location = new System.Drawing.Point(578, 130);
+            this.lblTimeFilterRange.Location = new System.Drawing.Point(576, 92);
             this.lblTimeFilterRange.Name = "lblTimeFilterRange";
             this.lblTimeFilterRange.Size = new System.Drawing.Size(80, 25);
             this.lblTimeFilterRange.TabIndex = 41;
@@ -324,7 +314,7 @@
             // 
             // btnStatsPreviousDay
             // 
-            this.btnStatsPreviousDay.Location = new System.Drawing.Point(491, 125);
+            this.btnStatsPreviousDay.Location = new System.Drawing.Point(489, 87);
             this.btnStatsPreviousDay.Name = "btnStatsPreviousDay";
             this.btnStatsPreviousDay.Size = new System.Drawing.Size(23, 40);
             this.btnStatsPreviousDay.TabIndex = 40;
@@ -335,7 +325,7 @@
             // 
             // btnStatsNextDay
             // 
-            this.btnStatsNextDay.Location = new System.Drawing.Point(747, 123);
+            this.btnStatsNextDay.Location = new System.Drawing.Point(745, 85);
             this.btnStatsNextDay.Name = "btnStatsNextDay";
             this.btnStatsNextDay.Size = new System.Drawing.Size(23, 40);
             this.btnStatsNextDay.TabIndex = 41;
@@ -346,7 +336,7 @@
             // 
             // btnLastMonth
             // 
-            this.btnLastMonth.Location = new System.Drawing.Point(491, 125);
+            this.btnLastMonth.Location = new System.Drawing.Point(489, 87);
             this.btnLastMonth.Name = "btnLastMonth";
             this.btnLastMonth.Size = new System.Drawing.Size(23, 40);
             this.btnLastMonth.TabIndex = 34;
@@ -357,7 +347,7 @@
             // 
             // btnNextMonth
             // 
-            this.btnNextMonth.Location = new System.Drawing.Point(747, 123);
+            this.btnNextMonth.Location = new System.Drawing.Point(745, 85);
             this.btnNextMonth.Name = "btnNextMonth";
             this.btnNextMonth.Size = new System.Drawing.Size(23, 40);
             this.btnNextMonth.TabIndex = 34;
@@ -368,7 +358,7 @@
             // 
             // btnNextWeek
             // 
-            this.btnNextWeek.Location = new System.Drawing.Point(747, 123);
+            this.btnNextWeek.Location = new System.Drawing.Point(745, 85);
             this.btnNextWeek.Name = "btnNextWeek";
             this.btnNextWeek.Size = new System.Drawing.Size(23, 40);
             this.btnNextWeek.TabIndex = 5;
@@ -379,7 +369,7 @@
             // 
             // btnLastWeek
             // 
-            this.btnLastWeek.Location = new System.Drawing.Point(491, 125);
+            this.btnLastWeek.Location = new System.Drawing.Point(489, 87);
             this.btnLastWeek.Name = "btnLastWeek";
             this.btnLastWeek.Size = new System.Drawing.Size(23, 40);
             this.btnLastWeek.TabIndex = 5;
@@ -395,20 +385,20 @@
             this.flowStatsThird.Location = new System.Drawing.Point(314, 0);
             this.flowStatsThird.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.flowStatsThird.Name = "flowStatsThird";
-            this.flowStatsThird.Size = new System.Drawing.Size(100, 364);
+            this.flowStatsThird.Size = new System.Drawing.Size(100, 579);
             this.flowStatsThird.TabIndex = 33;
             // 
             // txtTestBox
             // 
-            this.txtTestBox.Location = new System.Drawing.Point(500, 893);
+            this.txtTestBox.Location = new System.Drawing.Point(529, 849);
             this.txtTestBox.Name = "txtTestBox";
-            this.txtTestBox.Size = new System.Drawing.Size(100, 23);
+            this.txtTestBox.Size = new System.Drawing.Size(157, 23);
             this.txtTestBox.TabIndex = 34;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(500, 875);
+            this.label6.Location = new System.Drawing.Point(529, 831);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(47, 15);
             this.label6.TabIndex = 35;
@@ -416,14 +406,14 @@
             // 
             // txtTestBoxTwo
             // 
-            this.txtTestBoxTwo.Location = new System.Drawing.Point(500, 919);
+            this.txtTestBoxTwo.Location = new System.Drawing.Point(529, 875);
             this.txtTestBoxTwo.Name = "txtTestBoxTwo";
             this.txtTestBoxTwo.Size = new System.Drawing.Size(157, 23);
             this.txtTestBoxTwo.TabIndex = 36;
             // 
             // TxtTestBoxThree
             // 
-            this.TxtTestBoxThree.Location = new System.Drawing.Point(500, 948);
+            this.TxtTestBoxThree.Location = new System.Drawing.Point(529, 904);
             this.TxtTestBoxThree.Name = "TxtTestBoxThree";
             this.TxtTestBoxThree.Size = new System.Drawing.Size(157, 23);
             this.TxtTestBoxThree.TabIndex = 36;
@@ -435,14 +425,14 @@
             this.flowIgnoreActivity.Location = new System.Drawing.Point(515, 0);
             this.flowIgnoreActivity.Margin = new System.Windows.Forms.Padding(0);
             this.flowIgnoreActivity.Name = "flowIgnoreActivity";
-            this.flowIgnoreActivity.Size = new System.Drawing.Size(100, 364);
+            this.flowIgnoreActivity.Size = new System.Drawing.Size(100, 579);
             this.flowIgnoreActivity.TabIndex = 37;
             // 
             // lbxTest
             // 
             this.lbxTest.FormattingEnabled = true;
             this.lbxTest.ItemHeight = 15;
-            this.lbxTest.Location = new System.Drawing.Point(354, 885);
+            this.lbxTest.Location = new System.Drawing.Point(383, 841);
             this.lbxTest.Name = "lbxTest";
             this.lbxTest.Size = new System.Drawing.Size(120, 94);
             this.lbxTest.TabIndex = 39;
@@ -454,19 +444,19 @@
             this.flowStartCurrent.Location = new System.Drawing.Point(11, 0);
             this.flowStartCurrent.Margin = new System.Windows.Forms.Padding(0);
             this.flowStartCurrent.Name = "flowStartCurrent";
-            this.flowStartCurrent.Size = new System.Drawing.Size(75, 364);
+            this.flowStartCurrent.Size = new System.Drawing.Size(75, 579);
             this.flowStartCurrent.TabIndex = 40;
             // 
             // txtTestBox4
             // 
-            this.txtTestBox4.Location = new System.Drawing.Point(670, 893);
+            this.txtTestBox4.Location = new System.Drawing.Point(699, 849);
             this.txtTestBox4.Name = "txtTestBox4";
-            this.txtTestBox4.Size = new System.Drawing.Size(100, 23);
+            this.txtTestBox4.Size = new System.Drawing.Size(158, 23);
             this.txtTestBox4.TabIndex = 41;
             // 
             // btnUnassigned
             // 
-            this.btnUnassigned.Location = new System.Drawing.Point(408, 178);
+            this.btnUnassigned.Location = new System.Drawing.Point(406, 140);
             this.btnUnassigned.Name = "btnUnassigned";
             this.btnUnassigned.Size = new System.Drawing.Size(128, 23);
             this.btnUnassigned.TabIndex = 42;
@@ -476,7 +466,7 @@
             // cbUnassignedHrs
             // 
             this.cbUnassignedHrs.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbUnassignedHrs.Location = new System.Drawing.Point(536, 178);
+            this.cbUnassignedHrs.Location = new System.Drawing.Point(534, 140);
             this.cbUnassignedHrs.Name = "cbUnassignedHrs";
             this.cbUnassignedHrs.Size = new System.Drawing.Size(75, 23);
             this.cbUnassignedHrs.TabIndex = 43;
@@ -486,7 +476,7 @@
             // cbUnassignedHrsPerDay
             // 
             this.cbUnassignedHrsPerDay.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbUnassignedHrsPerDay.Location = new System.Drawing.Point(636, 178);
+            this.cbUnassignedHrsPerDay.Location = new System.Drawing.Point(634, 140);
             this.cbUnassignedHrsPerDay.Name = "cbUnassignedHrsPerDay";
             this.cbUnassignedHrsPerDay.Size = new System.Drawing.Size(95, 23);
             this.cbUnassignedHrsPerDay.TabIndex = 43;
@@ -496,24 +486,13 @@
             // cbUnassignedPercent
             // 
             this.cbUnassignedPercent.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbUnassignedPercent.Location = new System.Drawing.Point(737, 178);
+            this.cbUnassignedPercent.Location = new System.Drawing.Point(735, 140);
             this.cbUnassignedPercent.Name = "cbUnassignedPercent";
             this.cbUnassignedPercent.Size = new System.Drawing.Size(75, 23);
             this.cbUnassignedPercent.TabIndex = 43;
             this.cbUnassignedPercent.Text = "unass %";
             this.cbUnassignedPercent.UseVisualStyleBackColor = true;
             this.cbUnassignedPercent.CheckedChanged += new System.EventHandler(this.cbUnassignedPercent_CheckedChanged);
-            // 
-            // cbIncluded
-            // 
-            this.cbIncluded.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbIncluded.AutoSize = true;
-            this.cbIncluded.Location = new System.Drawing.Point(837, 176);
-            this.cbIncluded.Name = "cbIncluded";
-            this.cbIncluded.Size = new System.Drawing.Size(61, 25);
-            this.cbIncluded.TabIndex = 43;
-            this.cbIncluded.Text = "include?";
-            this.cbIncluded.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -524,14 +503,14 @@
             this.panel2.Controls.Add(this.flowStatsThird);
             this.panel2.Controls.Add(this.flowIgnoreActivity);
             this.panel2.Controls.Add(this.flowStartCurrent);
-            this.panel2.Location = new System.Drawing.Point(344, 207);
+            this.panel2.Location = new System.Drawing.Point(314, 178);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(649, 392);
+            this.panel2.Size = new System.Drawing.Size(649, 596);
             this.panel2.TabIndex = 44;
             // 
             // dtpCustomStart
             // 
-            this.dtpCustomStart.Location = new System.Drawing.Point(331, 143);
+            this.dtpCustomStart.Location = new System.Drawing.Point(329, 105);
             this.dtpCustomStart.Name = "dtpCustomStart";
             this.dtpCustomStart.Size = new System.Drawing.Size(200, 23);
             this.dtpCustomStart.TabIndex = 45;
@@ -540,16 +519,17 @@
             // 
             // dtpCustomEnd
             // 
-            this.dtpCustomEnd.Location = new System.Drawing.Point(719, 142);
+            this.dtpCustomEnd.Location = new System.Drawing.Point(717, 104);
             this.dtpCustomEnd.Name = "dtpCustomEnd";
             this.dtpCustomEnd.Size = new System.Drawing.Size(200, 23);
             this.dtpCustomEnd.TabIndex = 46;
             this.dtpCustomEnd.Visible = false;
+            this.dtpCustomEnd.ValueChanged += new System.EventHandler(this.dtpCustomEnd_ValueChanged);
             // 
             // lblCustomStart
             // 
             this.lblCustomStart.AutoSize = true;
-            this.lblCustomStart.Location = new System.Drawing.Point(331, 125);
+            this.lblCustomStart.Location = new System.Drawing.Point(329, 87);
             this.lblCustomStart.Name = "lblCustomStart";
             this.lblCustomStart.Size = new System.Drawing.Size(38, 15);
             this.lblCustomStart.TabIndex = 47;
@@ -559,21 +539,31 @@
             // lblCustomEnd
             // 
             this.lblCustomEnd.AutoSize = true;
-            this.lblCustomEnd.Location = new System.Drawing.Point(719, 125);
+            this.lblCustomEnd.Location = new System.Drawing.Point(717, 87);
             this.lblCustomEnd.Name = "lblCustomEnd";
             this.lblCustomEnd.Size = new System.Drawing.Size(22, 15);
             this.lblCustomEnd.TabIndex = 48;
             this.lblCustomEnd.Text = "To:";
             this.lblCustomEnd.Visible = false;
             // 
+            // btnUnignoreAll
+            // 
+            this.btnUnignoreAll.Location = new System.Drawing.Point(838, 140);
+            this.btnUnignoreAll.Name = "btnUnignoreAll";
+            this.btnUnignoreAll.Size = new System.Drawing.Size(91, 23);
+            this.btnUnignoreAll.TabIndex = 49;
+            this.btnUnignoreAll.Text = "Unignore All";
+            this.btnUnignoreAll.UseVisualStyleBackColor = true;
+            this.btnUnignoreAll.Click += new System.EventHandler(this.btnUnignoreAll_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1019, 689);
+            this.ClientSize = new System.Drawing.Size(1019, 992);
+            this.Controls.Add(this.btnUnignoreAll);
             this.Controls.Add(this.btnUnassigned);
-            this.Controls.Add(this.cbIncluded);
             this.Controls.Add(this.lblCustomEnd);
             this.Controls.Add(this.lblCustomStart);
             this.Controls.Add(this.cbUnassignedPercent);
@@ -605,7 +595,6 @@
             this.Controls.Add(this.btnNextDay);
             this.Controls.Add(this.gbFilters);
             this.Controls.Add(this.btnCreateNewEventCurrent);
-            this.Controls.Add(this.cdrDisplayEvents);
             this.Name = "Form1";
             this.Text = "Time Keeper";
             this.Activated += new System.EventHandler(this.Form1_Load);
@@ -622,7 +611,6 @@
 
         #endregion
         private System.Windows.Forms.Timer timer1;
-        private MonthCalendar cdrDisplayEvents;
         private Button btnCreateNewEventCurrent;
         private Panel pnlDailyView;
         private Button btnNextDay;
@@ -663,11 +651,11 @@
         private CheckBox cbUnassignedHrs;
         private CheckBox cbUnassignedHrsPerDay;
         private CheckBox cbUnassignedPercent;
-        private CheckBox cbIncluded;
         private Panel panel2;
         private DateTimePicker dtpCustomStart;
         private DateTimePicker dtpCustomEnd;
         private Label lblCustomStart;
         private Label lblCustomEnd;
+        private Button btnUnignoreAll;
     }
 }

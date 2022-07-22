@@ -20,49 +20,50 @@ namespace TimeLog
             activity = a;
         }
 
-        
-        //private void PopulateCurrentFlow(List<Activity> list)
-        //{
-        //    foreach (Activity a in activities)
-        //    {
 
-        //        Button btn = new Button();
+        private void PopulateCurrentFlow(List<Activity> list)
+        {
+            flowCurrentSelection.Controls.Clear();
+            foreach (Activity a in activities)
+            {
 
-        //        btn.Location = new Point(0, 0);
-        //        btn.Text = a.Name;
-        //        btn.Name = "newBtn" + a.Name;
-        //        btn.BackColor = a.Color;
-        //        btn.FlatAppearance.BorderSize = 0;
-        //        btn.FlatStyle = FlatStyle.Flat;
-        //        btn.Margin = new Padding(0);
-        //        btn.ForeColor = a.TextColor;
-        //        btn.Size = new Size(60, 25);
-        //        btn.AutoSize = true;
-        //        btn.Font = new Font("Arial", 10, FontStyle.Regular);
-        //        btn.Click += new EventHandler(CurrentEventBtn_Click);
-        //        flowCurrentSelection.Controls.Add(btn);
-                
-                
-        //    }
+                Button btn = new Button();
+
+                btn.Location = new Point(0, 0);
+                btn.Text = a.Name;
+                btn.Name = "newBtn" + a.Name;
+                btn.BackColor = a.Color;
+                btn.FlatAppearance.BorderSize = 0;
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.Margin = new Padding(0);
+                btn.ForeColor = a.TextColor;
+                btn.Size = new Size(60, 25);
+                btn.AutoSize = true;
+                btn.Font = new Font("Arial", 10, FontStyle.Regular);
+                btn.Click += new EventHandler(CurrentEventBtn_Click);
+                flowCurrentSelection.Controls.Add(btn);
+
+
+            }
+
+
+        }
+
+        private void CurrentEventBtn_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            activity = Activity.GetActivity(btn.Text);
+
+            StartCurrentActivity();
             
-
-        //}
-
-        //private void CurrentEventBtn_Click(object sender, EventArgs e)
-        //{
-        //    Button btn = sender as Button;
-        //    btnStartCurrent.Visible = true;
-        //    btnStartCurrent.Tag = btn.Text;
-        //    this.BackColor = btn.BackColor;
-        //    lblActivityDisplay.Text = btnStartCurrent.Tag.ToString();
-        //}
-     
-
-        private void frmCurrentActivity_Load(object sender, EventArgs e)
+            
+            //lblActivityDisplay.Text = btnStartCurrent.Tag.ToString();
+        }
+        private void StartCurrentActivity()
         {
             activities = Activity.GetActivityList();
-            
-            
+
+
             //PopulateCurrentFlow(activities);
             pnlCurrentEvent.Visible = true;
             lblCurrentEventStart.Text = DateTime.Now.ToString("hh:mm:ss tt");
@@ -78,6 +79,30 @@ namespace TimeLog
             this.ForeColor = activity.TextColor;
             //flowCurrentSelection.Visible = false;
             timer1.Enabled = true;
+            flowCurrentSelection.Visible = false;
+        }
+
+        private void frmCurrentActivity_Load(object sender, EventArgs e)
+        {
+            StartCurrentActivity();
+            //activities = Activity.GetActivityList();
+            
+            
+            ////PopulateCurrentFlow(activities);
+            //pnlCurrentEvent.Visible = true;
+            //lblCurrentEventStart.Text = DateTime.Now.ToString("hh:mm:ss tt");
+            //lblActivityDisplay.Visible = true;
+            //lblActivityDisplay.Text = activity.Name;
+            ////lblActivityDisplay.Text = btnStartCurrent.Tag.ToString();
+            //lblCurrentDuration.Visible = true;
+            //lblStartLabel.Visible = true;
+            //lblCurrentEventStart.Visible = true;
+            ////btnStartCurrent.Visible = false;
+            //btnStopCurrentActivity.Visible = true;
+            //this.BackColor = activity.Color;
+            //this.ForeColor = activity.TextColor;
+            ////flowCurrentSelection.Visible = false;
+            //timer1.Enabled = true;
 
         }
 
@@ -213,7 +238,22 @@ namespace TimeLog
             //this.Controls.Add(lbl);
         }
 
-       
+        private void btnStartAnother_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
+            //gbModeSelect.Visible=true;
+
+            activities = Activity.GetActivityList();
+            foreach (Activity activity in activities.Where(x => x.Name == activity.Name))
+            {
+                activity.AddPastEvent(activity.Name, DateTime.Parse(lblCurrentEventStart.Text), DateTime.Now);
+
+            }
+            Activity.SaveActivityList(activities);
+            
+            PopulateCurrentFlow(activities);
+            flowCurrentSelection.Visible = true;
+        }
     }
 }
 

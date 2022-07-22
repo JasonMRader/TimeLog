@@ -40,6 +40,8 @@
             this.btnMinusFive = new System.Windows.Forms.Button();
             this.btnAddFive = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.btnStartAnother = new System.Windows.Forms.Button();
+            this.flowCurrentSelection = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlCurrentEvent.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -159,11 +161,33 @@
             // 
             this.colorDialog1.AnyColor = true;
             // 
+            // btnStartAnother
+            // 
+            this.btnStartAnother.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStartAnother.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnStartAnother.Location = new System.Drawing.Point(12, 204);
+            this.btnStartAnother.Name = "btnStartAnother";
+            this.btnStartAnother.Size = new System.Drawing.Size(300, 46);
+            this.btnStartAnother.TabIndex = 21;
+            this.btnStartAnother.Text = "Finish and Start New";
+            this.btnStartAnother.UseVisualStyleBackColor = true;
+            this.btnStartAnother.Click += new System.EventHandler(this.btnStartAnother_Click);
+            // 
+            // flowCurrentSelection
+            // 
+            this.flowCurrentSelection.Location = new System.Drawing.Point(5, 12);
+            this.flowCurrentSelection.Name = "flowCurrentSelection";
+            this.flowCurrentSelection.Size = new System.Drawing.Size(310, 238);
+            this.flowCurrentSelection.TabIndex = 22;
+            this.flowCurrentSelection.Visible = false;
+            // 
             // frmCurrentActivity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(327, 250);
+            this.ClientSize = new System.Drawing.Size(323, 262);
+            this.Controls.Add(this.flowCurrentSelection);
+            this.Controls.Add(this.btnStartAnother);
             this.Controls.Add(this.btnStopCurrentActivity);
             this.Controls.Add(this.pnlCurrentEvent);
             this.Name = "frmCurrentActivity";
@@ -188,5 +212,7 @@
         private Button btnMinusFive;
         private Button btnAddFive;
         private Button btnCancelCurrent;
+        private Button btnStartAnother;
+        private FlowLayoutPanel flowCurrentSelection;
     }
 }

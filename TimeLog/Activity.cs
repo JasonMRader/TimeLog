@@ -10,12 +10,19 @@ namespace TimeLog
     public class Activity
     {
         public Activity() { }
+        public Activity(string name, Color color, string textColor, bool ignore)
+        {
+            this.Name = name;
+            this.Color = color;
+            this.TextColorString = textColor;
+            this.isIgnored = ignore;
+        }
         [XmlElement(ElementName = "Name", Order = 1)]
         public string Name { get; set; }
 
         [XmlArray(ElementName = "Events", Order = 3)]
         public List<Event> Events = new List<Event>();
-        //[XmlElement(ElementName = "ActColor", Order = 2)] public Color Color { get; set; }
+       
         [XmlIgnore]
         public Color Color { get; set; }
 
@@ -75,21 +82,35 @@ namespace TimeLog
             
            
         }
-        public TimeSpan GetDuration(DateTime dtStart, DateTime dtEnd)
+       
+        public static List<Activity> SortActivities(DateTime fromTime, DateTime toTime)
         {
-            TimeSpan duration = new TimeSpan(0,0,0);
-            //this.TotalDuration = duration;
-            foreach(Event e in this.Events)
+            //List<Event> events = new();
+            List<Activity> activityList = new List<Activity>(GetActivityList());
+            List<Activity> sortedList = new();
+            foreach (Activity activity in activityList)
             {
-                if (e.StartTime > dtStart && e.StartTime < dtEnd && this.isIgnored == false)
-                {
-                    duration += e.Duration;
-                }
+                Activity a = new Activity(activity.Name, activity.Color, activity.TextColorString, activity.isIgnored);
                 
+                //activity.TotalDuration = (int 0, int 0, int 0);
+                foreach (Event e in activity.Events)
+                {
+                    if (e.StartTime > fromTime && e.StartTime < toTime && activity.isIgnored == false)
+                    {
+                        e.Color = activity.Color;
+                        e.TextColor = activity.TextColor;
+                        a.Events.Add(e);
+                        //activity.TotalDuration += e.Duration;
+                    }
+                    
+                }
+                sortedList.Add(a);
             }
-            return duration;
+            sortedList.Sort((b, a) => a.TotalDuration.CompareTo(b.TotalDuration));
+            //events.Sort((a, b) => a.StartTime.CompareTo(b.StartTime));
 
-        } 
+            return sortedList;
+        }
         public static List<Event> GetEvents (DateTime fromTime, DateTime toTime)
         {
             List<Event> events = new();
@@ -113,12 +134,66 @@ namespace TimeLog
             return events;
 
         }
-        public static TimeSpan AllEventsDuration(List<Event> events)
+        public static TimeSpan GetIgnoredEvents(DateTime fromTime, DateTime toTime)
+        {
+            TimeSpan ignoredEvents = TimeSpan.Zero;
+            List<Event> events = new();
+            List<Activity> activityList = new List<Activity>(GetActivityList());
+            foreach (Activity activity in activityList)
+            {
+                //activity.TotalDuration = (int 0, int 0, int 0);
+                foreach (Event e in activity.Events)
+                {
+                    if (e.StartTime > fromTime && e.StartTime < toTime && activity.isIgnored == true)
+                    {
+                        if (e.EndTime < toTime)
+                            ignoredEvents += e.Duration;
+                        else
+                            ignoredEvents += e.Duration - (e.EndTime - toTime);
+                    }
+                }
+            }
+            events.Sort((a, b) => a.StartTime.CompareTo(b.StartTime));
+
+            return ignoredEvents;
+
+        }
+        public TimeSpan GetDuration(DateTime dtStart, DateTime dtEnd)
+        {
+            TimeSpan duration = new TimeSpan(0, 0, 0);
+            //this.TotalDuration = duration;
+            foreach (Event e in this.Events)
+            {
+                if (e.StartTime > dtStart && e.StartTime < dtEnd && this.isIgnored == false)
+                {
+                    if (e.EndTime < dtEnd)
+                        duration += e.Duration;
+                    else
+                        duration += e.Duration - (e.EndTime - dtEnd);
+                }
+
+            }
+            return duration;
+
+        }
+        public static TimeSpan GetUnassignedDuration(List<Event> events, DateTime start, DateTime end)
+        {
+            
+            TimeSpan timeSpan = end - start;
+            TimeSpan eventsDuration = AllEventsDuration(events, start, end) + GetIgnoredEvents(start, end);
+            return timeSpan - eventsDuration;
+
+
+        }
+        public static TimeSpan AllEventsDuration(List<Event> events, DateTime dtStart, DateTime dtEnd)
         {
             TimeSpan allEvents = new TimeSpan(0, 0, 0);
             foreach (Event e in events)
             {
-                allEvents += e.Duration;
+                if (e.EndTime < dtEnd)
+                    allEvents += e.Duration;
+                else
+                    allEvents += e.Duration - (e.EndTime - dtEnd);
             }
             return allEvents;
         }
@@ -179,6 +254,17 @@ namespace TimeLog
             }
             return color;
 
+        }
+
+        public static Activity GetActivity (string activityName)
+        {
+            Activity a = new Activity();
+            List<Activity> list = GetActivityList();
+            foreach (Activity activity in list.Where (x => x.Name == activityName)) 
+            {
+                a = activity;
+            }  
+            return a;
         }
         
 

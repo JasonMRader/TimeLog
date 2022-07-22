@@ -115,7 +115,7 @@ namespace TimeLog
             this.ForeColor = activity.TextColor;
             lblTimeFrame.Text = DateTime.Now.ToString("ddd MMM d");
             PopulateButtons();
-            PopulateEventList(DateTime.Today.AddDays(-7), DateTime.Now);
+            PopulateEventList(DateTime.Today, DateTime.Now);
             lblStartDisplay.Text = dtpStart.Value.ToString("dddd, MMM d");
             lblEndDisplay.Text = dtpEnd.Value.ToString("dddd, MMM d");
             lblEventDisplay.Text = activity.Name;
@@ -247,7 +247,7 @@ namespace TimeLog
             Activity.SaveActivityList(activities);
             
 
-            PopulateEventList(DateTime.Now.AddDays(-7), DateTime.Now);
+            PopulateEventList(DateTime.Now, DateTime.Now);
         }
 
         private void rdoWeek_CheckedChanged(object sender, EventArgs e)
